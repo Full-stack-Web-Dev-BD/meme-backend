@@ -5,6 +5,10 @@ const roundSchema = new Schema({
 		type: String,
 		require: true
 	},
+	perticipants: {
+		type: Array,
+		default: []
+	},
 	time: {
 		type: Number,
 		require: true

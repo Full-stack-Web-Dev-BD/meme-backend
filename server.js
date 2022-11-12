@@ -85,6 +85,8 @@ io.on('connect', (socket) => {
 	})
 });
 
+app.use(express.static("uploads"));
+
 server.listen(port, () => {
 	console.log('server is running on port: ' + port);
 })
