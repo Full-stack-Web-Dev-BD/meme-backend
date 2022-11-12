@@ -3,7 +3,7 @@ const Room = require("../models/Room");
 //Array of users
 const users = [];
 
-const addUser = ({ id, name, room, socket, topic }) => {
+const addUser = ({ id, name, room, socket, topic, owner }) => {
     name = name.trim().toLowerCase();
     room = room.trim().toLowerCase();
     topic = topic.trim().toLowerCase();
@@ -28,15 +28,13 @@ const addUser = ({ id, name, room, socket, topic }) => {
                 room.perticipant = [...updateRoomPerticipant]
                 room.save()
                     .then(newList => {
-                        console.log("Updated List ", newList)
                         socket.broadcast.to(user.room).emit('roomUpdate', { room: newList });
                         socket.emit('roomUpdate', { room: newList });
                     })
             } else {
-                new Room({ roomName: user.room, perticipant: [user], topic: topic })
+                new Room({ roomName: user.room, perticipant: [user], topic: topic, session: [], owner: owner })
                     .save()
                     .then(newRoom => {
-                        console.log("New Room Created on Database", newRoom)
                         socket.broadcast.to(user.room).emit('roomUpdate', { room: newRoom });
                         socket.emit('roomUpdate', { room: newRoom });
                     })

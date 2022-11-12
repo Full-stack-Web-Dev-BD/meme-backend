@@ -18,6 +18,7 @@ const RoomRouter = require('./routes/api/Room');
 const Chat = require('./models/Chat');
 const ChatRouter = require('./routes/api/Chat');
 const TopicRouter = require('./routes/api/TopicRouter');
+const RoundRouter = require('./routes/api/RoundRouter');
 
 const app = express();
 app.use(morgan('dev'))
@@ -48,12 +49,13 @@ app.use('/api/user', UserRoutes);
 app.use('/api/room', RoomRouter);
 app.use('/api/chat', ChatRouter);
 app.use('/api/topic', TopicRouter);
+app.use('/api/round', RoundRouter);
 
 
 // Sockets
 io.on('connect', (socket) => {
-	socket.on('join', ({ name, room, topic }, callback) => {
-		const { error, user } = addUser({ id: socket.id, name, room, socket, topic });
+	socket.on('join', ({ name, room, topic, owner }, callback) => {
+		const { error, user } = addUser({ id: socket.id, name, room, socket, topic, owner: owner });
 		if (error) return callback(error);
 		socket.join(user.room);
 		socket.emit('message', { sms: { user: 'admin', text: `${user.userName}, Welcome Back to room ${user.room}.`, uid: socket.id }, users: socketUsers() });
@@ -68,6 +70,11 @@ io.on('connect', (socket) => {
 			.save()
 		io.to(user.room).emit('message', { sms });
 	});
+	socket.on('roundPush', data => {
+		console.log(data)
+		socket.emit('roundPushBack', { ...data });
+		socket.broadcast.to(data.room).emit('roundPushBack', { ...data });
+	})
 	socket.on('disconnect', () => {
 		const user = removeUser(socket.id);
 		console.log("User Disconnected ")

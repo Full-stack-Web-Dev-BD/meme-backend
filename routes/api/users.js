@@ -13,20 +13,16 @@ const User = require('../../models/User');
 const router = express.Router();
 
 router.post('/register', (req, res) => {
-
 	const { errors, isValid } = validateRegisterInput(req.body);
-
 	if (!isValid) {
 		return res.status(400).json(errors);
 	}
-
 	User.findOne({ email: req.body.email })
 		.then((user) => {
 			if (user) {
 				errors.email = 'Email already exits';
 				res.status(400).json(errors);
 			} else {
-
 				const avatar = gravatar.url(req.body.email, {
 					s: '200',
 					r: 'pg',
@@ -35,10 +31,15 @@ router.post('/register', (req, res) => {
 				const newUser = new User({
 					name: req.body.name,
 					email: req.body.email,
-					avatar,
+					avatar: "not required",
+					balance: {
+						freeEsterEggs: 100,
+						freeRotenEggs: 100,
+						paidEsterEggs: 30,
+						paidRottenEggs: 30
+					},
 					password: req.body.password
 				})
-
 				bcrypt.genSalt(10, (err, salt) => {
 					bcrypt.hash(newUser.password, salt, (err, hash) => {
 						if (err) throw err;
@@ -51,7 +52,6 @@ router.post('/register', (req, res) => {
 								console.log(err);
 							})
 					})
-
 				})
 			}
 		})
@@ -113,8 +113,7 @@ router.post('/update-user', (req, res) => {
 			res.json({ message: "error ", err })
 		})
 })
-router.get('/all-user', (req, res) => {
-	console.log("api called ")
+router.get('/', (req, res) => {
 	User.find()
 		.then(allUser => {
 			res.json(allUser).status(200)
@@ -123,7 +122,19 @@ router.get('/all-user', (req, res) => {
 			res.json(err).status(400)
 		})
 })
-
+router.delete("/:id", (req, res) => {
+	User.findByIdAndDelete(req.params.id)
+		.then(deleted => {
+			if (deleted) {
+				return res.json(deleted)
+			} else {
+				return res.json({ message: "User Not Finded !!" })
+			}
+		})
+		.catch(err => {
+			res.json(err)
+		})
+})
 router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
 	res.json({
 		id: req.user.id,

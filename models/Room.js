@@ -3,6 +3,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const RoomSchems = new Schema({
+	sesson: {
+		type: Array,
+		default: []
+	},
+	owner: {
+		type: String,
+		require: true
+	},
 	roomName: {
 		type: String,
 		require: true
