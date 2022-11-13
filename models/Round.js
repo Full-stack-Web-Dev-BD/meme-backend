@@ -21,6 +21,10 @@ const roundSchema = new Schema({
 		type: String,
 		require: true
 	},
+	winner: {
+		type: Object,
+		default: {}
+	},
 	date: {
 		type: Date,
 		default: Date.now

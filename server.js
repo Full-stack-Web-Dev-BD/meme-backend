@@ -19,6 +19,7 @@ const Chat = require('./models/Chat');
 const ChatRouter = require('./routes/api/Chat');
 const TopicRouter = require('./routes/api/TopicRouter');
 const RoundRouter = require('./routes/api/RoundRouter');
+var fs = require("fs")
 
 const app = express();
 app.use(morgan('dev'))
@@ -50,7 +51,11 @@ app.use('/api/room', RoomRouter);
 app.use('/api/chat', ChatRouter);
 app.use('/api/topic', TopicRouter);
 app.use('/api/round', RoundRouter);
-
+app.get("/files", (req, res) => {
+	fs.readdir("./uploads", (err, files) => {
+		return res.json(files)
+	})
+})
 
 // Sockets
 io.on('connect', (socket) => {
