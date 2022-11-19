@@ -7,11 +7,99 @@ const keys = require('../../config/keys');
 
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
-
 const User = require('../../models/User');
-
 const router = express.Router();
+const paypal = require('paypal-rest-sdk');
 
+
+
+router.post('/checkout', (req, res) => {
+
+	paypal.configure({
+		'mode': 'sandbox', //sandbox or live
+		'client_id': 'AWkC_xaoRVRLRwiQm6lkktEDSsAhoOFoiLw9uJ9HdgZYzrGZJnoQ5kCVPoP43aA6JFthwsibhQ-k-Z4a',
+		'client_secret': 'ELQWiXX2OSLP72vyKB-TTwVLWv_4dpkDsT8kHM4Sy6WO_UZJ7rjhlRRMtMAMZmSUuraStLTWuXM6cvJ9'
+	});
+
+
+	const create_payment_json = {
+		intent: "sale",
+		payer: {
+			payment_method: "paypal"
+		},
+		redirect_urls: {
+			return_url: "http://localhost:5000/api/user/payment-success",
+			cancel_url: "http://localhost:5000/api/user/payment-cancel"
+		},
+		transactions: [{
+			item_list: {
+				items: [{
+					name: req.body.packName,
+					sku: "001",
+					price: `${req.body.price}.00`,
+					currency: "USD",
+					quantity: 1
+				}]
+			},
+			amount: {
+				currency: "USD",
+				total: `${req.body.price}.00`
+			},
+			description: JSON.stringify(req.body)
+		}]
+	};
+	paypal.payment.create(JSON.stringify(create_payment_json), function (error, payment) {
+		if (error) {
+			throw error;
+		} else {
+			for (let i = 0; i < payment.links.length; i++) {
+				if (payment.links[i].rel === 'approval_url') {
+					console.log(payment.links[i].href)
+					return res.json(payment.links[i].href);
+				}
+			}
+		}
+	});
+})
+
+
+router.get('/payment-success', (req, res) => {
+	const payerId = req.query.PayerID;
+	const paymentId = req.query.paymentId;
+
+	const execute_payment_json = {
+		"payer_id": payerId
+	};
+
+	paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+		if (error) {
+			console.log(error.response);
+			throw error;
+		} else {
+			console.log(JSON.stringify(payment));
+			var paymentDetails = JSON.parse(payment.transactions[0].description);
+			User.findById(paymentDetails.user)
+				.then(user => {
+					console.log(user)
+					var updateUser = user
+					updateUser.balance.paidEsterEggs = updateUser.balance.paidEsterEggs + paymentDetails.esterEggs
+					updateUser.balance.paidRottenEggs = updateUser.balance.paidRottenEggs + paymentDetails.rottenEggs
+					console.log("updated balance ", updateUser.balance)
+					User.findByIdAndUpdate(paymentDetails.user, updateUser, { new: true })
+						.then(resp => {
+							console.log(resp)
+							res.redirect("http://localhost:3000/success")
+						})
+						.catch(err => {
+							res.json(err)
+							console.log(err)
+						})
+				})
+		}
+	});
+});
+
+router.get('/payment-cancel', (req, res) => res.send('Cancelled'));
 router.post('/register', (req, res) => {
 	const { errors, isValid } = validateRegisterInput(req.body);
 	if (!isValid) {

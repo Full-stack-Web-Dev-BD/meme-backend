@@ -51,11 +51,13 @@ app.use('/api/room', RoomRouter);
 app.use('/api/chat', ChatRouter);
 app.use('/api/topic', TopicRouter);
 app.use('/api/round', RoundRouter);
+
 app.get("/files", (req, res) => {
 	fs.readdir("./uploads", (err, files) => {
 		return res.json(files)
 	})
 })
+
 
 // Sockets
 io.on('connect', (socket) => {
