@@ -34,8 +34,8 @@ router.post('/checkout', (req, res) => {
 			payment_method: "paypal"
 		},
 		redirect_urls: {
-			// return_url: "https://meme-backend-api.herokuapp.com/api/user/payment-success",
-			// cancel_url: "https://meme-backend-api.herokuapp.com/api/user/payment-cancel"
+			return_url: "https://meme-backend-api.herokuapp.com/api/user/payment-success",
+			cancel_url: "https://meme-backend-api.herokuapp.com/api/user/payment-cancel"
 
 			// return_url: "http://localhost:5000/api/user/payment-success",
 			// cancel_url: "http://localhost:5000/api/user/payment-cancel"
@@ -99,6 +99,7 @@ router.get('/payment-success', (req, res) => {
 						.then(resp => {
 							console.log(resp)
 							res.redirect("https://meme-frontend.vercel.app/success")
+							// res.redirect("https://meme-frontend.vercel.app/success")
 						})
 						.catch(err => {
 							res.json(err)
