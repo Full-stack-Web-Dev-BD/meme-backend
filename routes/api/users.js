@@ -16,9 +16,15 @@ const paypal = require('paypal-rest-sdk');
 router.post('/checkout', (req, res) => {
 
 	paypal.configure({
-		'mode': 'sandbox', //sandbox or live
-		'client_id': 'AWkC_xaoRVRLRwiQm6lkktEDSsAhoOFoiLw9uJ9HdgZYzrGZJnoQ5kCVPoP43aA6JFthwsibhQ-k-Z4a',
-		'client_secret': 'ELQWiXX2OSLP72vyKB-TTwVLWv_4dpkDsT8kHM4Sy6WO_UZJ7rjhlRRMtMAMZmSUuraStLTWuXM6cvJ9'
+		'mode': 'live', //sandbox or live
+		'client_id': 'AQ-G-nLPbc-RLRM-b6akpbgapyyi72vppFekw2vOVf8UOY3bi7YwHsfLXWVeySZIofwFKL1KCAHYznUa',//Live-Meme
+		// 'client_id': 'Aae9jmqpFR309TWIkxwY3qctslElWNnWw4_VoLunOon47-FsQjFQvPQHoboxfVY7sFDEkeifdXymVJW1',//Live-alamin
+		// 'client_id': 'AWkC_xaoRVRLRwiQm6lkktEDSsAhoOFoiLw9uJ9HdgZYzrGZJnoQ5kCVPoP43aA6JFthwsibhQ-k-Z4a',//Sandbox
+
+
+		'client_secret': 'EN_vF_8tmUYeZLYTK-hfG1EDV7DqFqOljxxqHr64tfd54EUcoq2qEm1qtyIy5GHKAUYHpiqCusqZq6uB'//Live-Meme
+		// 'client_secret': 'EDbPyBlOBG__deyzYgoCJm1Rnsmox3xp8RXCVmCobFxrVEpzjaZk1zoWQuBluRDKiP1ibeeAusXWi1r8'//Live-alamin
+		// 'client_secret': 'ELQWiXX2OSLP72vyKB-TTwVLWv_4dpkDsT8kHM4Sy6WO_UZJ7rjhlRRMtMAMZmSUuraStLTWuXM6cvJ9'//Sandbox
 	});
 
 
@@ -28,8 +34,12 @@ router.post('/checkout', (req, res) => {
 			payment_method: "paypal"
 		},
 		redirect_urls: {
-			return_url: "http://localhost:5000/api/user/payment-success",
-			cancel_url: "http://localhost:5000/api/user/payment-cancel"
+			// return_url: "https://meme-backend-api.herokuapp.com/api/user/payment-success",
+			// cancel_url: "https://meme-backend-api.herokuapp.com/api/user/payment-cancel"
+
+			// return_url: "http://localhost:5000/api/user/payment-success",
+			// cancel_url: "http://localhost:5000/api/user/payment-cancel"
+			// https://meme-frontend.vercel.app/
 		},
 		transactions: [{
 			item_list: {
@@ -88,7 +98,7 @@ router.get('/payment-success', (req, res) => {
 					User.findByIdAndUpdate(paymentDetails.user, updateUser, { new: true })
 						.then(resp => {
 							console.log(resp)
-							res.redirect("http://localhost:3000/success")
+							res.redirect("https://meme-frontend.vercel.app/success")
 						})
 						.catch(err => {
 							res.json(err)
