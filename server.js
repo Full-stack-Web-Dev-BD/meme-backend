@@ -63,8 +63,8 @@ app.get("/files", (req, res) => {
 
 // Sockets
 io.on('connect', (socket) => {
-	socket.on('join', ({ name, room, topic, owner }, callback) => {
-		const { error, user } = addUser({ id: socket.id, name, room, socket, topic, owner: owner });
+	socket.on('join', ({ name, room, topic, owner, pp }, callback) => {
+		const { error, user } = addUser({ id: socket.id, name, room, socket, topic, owner: owner, pp: pp });
 		if (error) return callback(error);
 		socket.join(user.room);
 		socket.emit('message', { sms: { user: 'admin', text: `${user.userName}, Welcome Back to room ${user.room}.`, uid: socket.id }, users: socketUsers() });

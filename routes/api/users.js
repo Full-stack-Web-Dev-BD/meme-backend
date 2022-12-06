@@ -122,15 +122,11 @@ router.post('/register', (req, res) => {
 				errors.email = 'Email already exits';
 				res.status(400).json(errors);
 			} else {
-				const avatar = gravatar.url(req.body.email, {
-					s: '200',
-					r: 'pg',
-					d: 'mm'
-				})
 				const newUser = new User({
 					name: req.body.name,
 					email: req.body.email,
-					avatar: "not required",
+					pp: Math.floor(Math.random() * 11) + 1,
+					country: req.body.country,
 					balance: {
 						freeEsterEggs: 100,
 						freeRotenEggs: 100,
@@ -199,7 +195,6 @@ router.post('/login', (req, res) => {
 router.post('/update-user', (req, res) => {
 	User.findByIdAndUpdate(req.body._id, req.body, { new: true })
 		.then(updatedUser => {
-			console.log(updatedUser)
 			res.json(updatedUser)
 			// var newUser = user
 			// user.save()
@@ -243,6 +238,15 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
 });
 router.get('/find/:id', (req, res) => {
 	User.findById(req.params.id)
+		.then(user => {
+			res.json(user)
+		})
+		.catch(err => {
+			res.json({ err })
+		})
+});
+router.get('/find-email/:id', (req, res) => {
+	User.findOne({ email: req.params.id })
 		.then(user => {
 			res.json(user)
 		})

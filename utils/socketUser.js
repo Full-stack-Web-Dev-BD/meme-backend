@@ -3,7 +3,7 @@ const Room = require("../models/Room");
 //Array of users
 const users = [];
 
-const addUser = ({ id, name, room, socket, topic, owner }) => {
+const addUser = ({ id, name, room, socket, topic, owner, pp }) => {
     name = name.trim().toLowerCase();
     room = room.trim().toLowerCase();
     topic = topic.trim().toLowerCase();
@@ -14,8 +14,7 @@ const addUser = ({ id, name, room, socket, topic, owner }) => {
 
     if (!name || !room) return { error: 'Username and room are required.' };
     if (existingUser) return { error: 'Username already exists.' };
-
-    const user = { id, userName: name, room };
+    const user = { id, userName: name, room, pp: pp, };
     Room.findOne({ roomName: user.room })
         .then(room => {
             if (room) {

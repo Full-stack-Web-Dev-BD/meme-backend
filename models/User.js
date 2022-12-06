@@ -18,8 +18,8 @@ const userSchema = new Schema({
 		type: String,
 		require: true
 	},
-	avatar: {
-		type: String
+	pp: {
+		type: Number
 	},
 	userType: {
 		type: String,
