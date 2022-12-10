@@ -130,8 +130,8 @@ router.post('/register', (req, res) => {
 					balance: {
 						freeEsterEggs: 100,
 						freeRotenEggs: 100,
-						paidEsterEggs: 30,
-						paidRottenEggs: 30
+						paidEsterEggs: 5,
+						paidRottenEggs: 7
 					},
 					password: req.body.password
 				})
