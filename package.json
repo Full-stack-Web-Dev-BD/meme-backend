@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": " nodemon server.js",
-    "client": "npm run start --prefix client",
-    "dev": "npm  run start &&  npm run client"
+    "frontend": "npm run start --prefix frontend",
+    "dev": "concurrently \"npm run start\" \"npm run frontend\""
   },
   "author": "",
   "license": "MIT",
