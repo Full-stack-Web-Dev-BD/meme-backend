@@ -28,7 +28,7 @@
     "react-linkedin-login-oauth2": "*",
     "react-paypal-button-v2": "*",
     "react-router-dom": "*",
-    "react-scripts": "5.0.1",
+    "react-scripts": "",
     "react-toastify": "*",
     "recoil": "*",
     "socket.io-client": "*",
