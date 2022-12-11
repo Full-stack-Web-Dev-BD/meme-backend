@@ -13,7 +13,6 @@
   "dependencies": {
     "bcryptjs": "*",
     "body-parser": "*",
-    "concurrently": "*",
     "cors": "*",
     "express": "*",
     "gravatar": "*",
