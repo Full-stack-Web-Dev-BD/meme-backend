@@ -1,0 +1,28 @@
+#root {
+    height: 100%;
+}
+
+.hide_sc::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge add Firefox */
+.hide_sc {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+@media (min-width: 960px) {
+    body {
+        width: 100%;
+        height: 100vh;
+    }
+}
+
+@media (max-width: 959px) {
+    body {
+        width: 100%;
+        min-height: 100vh;
+    }
+}

@@ -1,0 +1,33 @@
+
+/* profile box */
+.p_box{
+    display: inline-block;
+    align-items: center;
+}
+.p_name_img_box{
+    display: flex;   
+}
+.p_photo_box{
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+.p_black_circle{
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    background-color: black;
+    border-radius: 50%;
+}
+.p_img{
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%);
+}
+.p_img img{
+    width: 50px;
+}
+.p_box h2{
+    margin-left: 10px;
+}

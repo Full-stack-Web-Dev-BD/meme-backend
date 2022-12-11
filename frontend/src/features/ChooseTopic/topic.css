@@ -1,0 +1,26 @@
+.topic_card_inner {
+    border-radius: 20px;
+    padding: 20px 70px 35px 70px;
+    background: #12121245;
+}
+
+.topic_content h2 {
+    color: white;
+    font-size: 1.3rem;
+}
+
+.topic_content p {
+    color: white;
+    font-size: 18px;
+    margin: 0;
+}
+
+.topic_content input {
+    border-radius: 15px;
+    background: #d3b0ba;
+    border: 1px solid white;
+}
+
+.topic_content img {
+    width: 200px;
+}

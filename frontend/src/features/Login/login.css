@@ -1,0 +1,13 @@
+.login_page {
+    padding-top: 200px;
+    overflow: hidden;
+}
+
+.yellow_btn {
+    color: white;
+    background: #f9af12;
+    padding: 2px 15px;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 11px;
+}

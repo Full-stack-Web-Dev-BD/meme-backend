@@ -1,0 +1,435 @@
+.dashboard_sidebar_inner {}
+
+.sidebar_top {
+  width: 100%;
+  height: 90px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url(../../../assets/fondo.png);
+  background-repeat: no-repeat;
+  background-position: left;
+}
+
+.sidebar_wrap {
+  margin: 40px 50px 0 50px;
+  background: white;
+  border-radius: 10px;
+}
+
+.db_single_player {
+  padding: 10px;
+  align-items: center;
+  cursor: pointer;
+  transition: .6s;
+}
+
+.db_single_player:hover {
+  background-color: #f5860d;
+}
+
+.active_player {
+  background-color: #f5860d;
+}
+
+
+.player_pp img {
+  margin: 0 20px;
+  width: 55px;
+}
+
+.player_name {
+  font-weight: 500;
+  font-size: 20px;
+  align-items: center;
+}
+
+/* Egg count */
+
+.p_egg {
+  display: none;
+  padding-left: 60px;
+}
+
+.p_egg_count {
+  margin: 0 5px;
+}
+
+.p_egg_count img {
+  width: 32px;
+}
+
+.p_egg_count span {
+  font-weight: 700;
+  color: black;
+  font-size: 16px;
+}
+
+.active_player .p_egg {
+  display: flex !important
+}
+
+
+
+/* Responsive CSS */
+
+/* Large desktops and laptops */
+@media (min-width: 1200px) {
+  .playing_tools {
+    max-width: 20%;
+  }
+
+  .playing_tool {
+    justify-content: space-around;
+  }
+
+  .pl_icon_box {
+    margin: 10px 5px;
+  }
+
+  .player_name {
+    margin: 0;
+  }
+}
+
+/* Landscape tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+  .playing_tools {
+    max-width: 20%;
+  }
+
+  .playing_tool {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .pl_icon_box {
+    margin: 10px 0;
+  }
+
+  .db_chat_box,
+  .sidebar_wrap {
+    margin: 40px 10px 0 10px;
+  }
+
+  .player_pp img {
+    margin: 0 5px;
+    width: 36px;
+  }
+
+  .player_name {
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .player_list {
+    margin-top: 10px !important;
+  }
+
+  .p_egg {
+    text-align: center;
+    padding-left: 0;
+  }
+
+  .player_name {
+    margin: 0;
+  }
+
+  .playing_tools {
+    margin-right: 20px !important;
+    min-width: 27%;
+  }
+
+  .input_grid div {
+    margin: 0 2px;
+  }
+
+  .v_grid,
+  .h_grid .h_3_grid {
+    max-width: 30%;
+  }
+
+  .db_chat_box {
+    bottom: 10px;
+    padding: 0 10px;
+  }
+
+  .dc_chat_box input {
+    padding: 0px 36px 0 6px;
+    font-size: 16px;
+  }
+
+  .dc_egg {
+    bottom: 20px;
+    padding: 0 20px 0 0;
+  }
+
+  .dc_egg span {
+    font-size: 22px;
+  }
+
+  .dc_egg img {
+    width: 26px;
+    height: 30px;
+  }
+
+  .dc_egg_layout {
+    padding-right: 10px;
+  }
+}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+
+  .playing_tools {
+    max-width: 20%;
+  }
+
+  .playing_tool {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .pl_icon_box {
+    margin: 10px 0;
+  }
+
+  .playing_tool {
+    flex-wrap: wrap;
+  }
+
+  .sidebar_wrap {
+    margin: 40px 5px 0 10px;
+  }
+
+  .db_single_player {
+    padding: 5px;
+  }
+
+  .player_pp img {
+    margin: 10px 2px;
+    width: 30px;
+  }
+
+  .player_name {
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .p_egg_count img {
+    width: 20px;
+  }
+
+  .p_egg {
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .p_egg_count span {
+    font-size: 13px;
+  }
+
+  .playing_tool_box {
+    padding: 7px;
+  }
+
+  .playing_tools {
+    margin-right: 12px !important;
+    padding-top: 14px;
+    width: 30%;
+  }
+
+  .playing_input {
+    width: 70%;
+  }
+
+  .pb_icon_box,
+  .pl_icon_box {
+    width: 45px;
+    height: 45px;
+    margin: 3px;
+  }
+
+  .pl_icon_box img {
+    width: 34px;
+  }
+
+  .playing_input {
+    padding: 5px;
+    border-radius: 2px;
+  }
+
+  .pb_icons {
+    padding-left: 5px;
+  }
+
+  .db_playing_box_bottom {
+    height: 285px;
+  }
+
+  .db_chat_box {
+    margin: 40px 10px 0 5px;
+  }
+
+  .dc_egg {
+    padding: 0;
+  }
+
+  .dc_egg span {
+    font-size: 18px;
+  }
+
+  .dc_egg img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .dc_egg span {
+    font-size: 14px;
+  }
+
+  .dc_chat_box button {
+    font-size: 14px;
+  }
+
+  .dc_chat_box input {
+    padding: 0 40px 0 10px;
+    font-size: 14px;
+  }
+
+  .dc_input_grup span {
+    right: 10px;
+  }
+
+  .dc_egg {
+    bottom: 10px;
+  }
+
+  .yellow_btn {
+    padding: 2px 15px;
+    font-size: 14px;
+    border-radius: 6px;
+  }
+
+  .player_list {
+    margin-top: 15px !important;
+  }
+
+  .sidebar_wrap button {
+    padding: 4px 15px;
+    font-size: 14px;
+  }
+
+  .db_chat_box .yellow_btn {
+    padding: 4px 15px;
+    font-size: 14px;
+  }
+
+  .img_placeholder {
+    width: 65px;
+    height: 60px;
+    margin: 4px;
+  }
+
+  .img_placeholder img {
+    width: 45px;
+  }
+
+  .color_placeholder {
+    width: 62px;
+    height: 50px;
+    margin: 5px;
+  }
+
+  .v_grid,
+  .h_grid .h_3_grid {
+    width: 30%;
+  }
+
+  .h_grid {
+    margin: 0 10px;
+  }
+
+  .v_grid {
+    justify-content: space-around;
+  }
+
+  .playing_tool_box {
+    margin-top: 5px !important;
+  }
+
+  .playing_tool {
+    margin: 7px 0 !important;
+  }
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+
+  .dashboard_sidebar,
+  .dashboard_chat {
+    position: absolute;
+    display: none;
+  }
+
+  .dashboard_main_content {
+    width: 100% !important;
+    height: 100vh;
+  }
+
+  .round_time .flex_content_between {
+    margin: 0;
+  }
+
+  .round_time {
+    padding: 0 6%;
+  }
+
+  .playing_tool_box {
+    padding: 25px 6%;
+  }
+
+  .pb_icons {
+    padding-left: 6%;
+  }
+
+  .tool_box_inner {
+    display: block;
+  }
+
+  .playing_tools {
+    margin: 0 !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .playing_tool {
+    height: fit-content;
+    flex-wrap: wrap;
+    margin: 0 !important;
+  }
+
+  .pl_icon_box {
+    width: 42px;
+    height: 42px;
+    margin: 6px;
+  }
+
+  .pl_icon_box img {
+    width: 30px;
+  }
+
+  .playing_input {
+    width: 100%;
+  }
+
+  .db_playing_box_bottom {
+    height: min-content;
+  }
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) {}

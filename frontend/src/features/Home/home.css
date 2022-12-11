@@ -1,0 +1,178 @@
+.home_page .meme_challange {
+    position: relative;
+    height: 200px;
+}
+
+.home_page .meme_challange_content {
+    position: absolute;
+    top: 0px;
+    transform: translate(-50%);
+    left: 50%;
+    z-index: 999;
+}
+
+.meme_challange_content>img {
+    width: 350px;
+    height: auto;
+}
+
+/* Card Left */
+.home_page .home_card_left {
+    background: #00000057;
+    padding: 60px 40px;
+    margin: 0 15px;
+    color: white;
+    border-radius: 30px;
+}
+
+.home_page .home_profile_box {
+    position: relative;
+    text-align: center;
+}
+
+.home_profile_box .home_profile_circle {
+    width: 130px;
+    height: 130px;
+    display: inline-block;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.home_page .home_profile_image {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.home_profile_image>img {
+    width: 135px;
+}
+
+.home_page .home_card_form label {
+    color: white;
+    font-size: 18px;
+}
+
+.home_page .home_input_copy_group {
+    position: relative;
+}
+
+.home_page .copy_icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translate(0, -50%);
+}
+
+.home_card_form input {
+    height: 38px;
+    border-radius: 17px;
+    background: #ffffff6b;
+}
+
+.home_card_form .home_btn_play {
+    color: white;
+    background: #f9af12;
+    padding: 2px 50px;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 11px;
+}
+
+/* card  Right */
+.home_page .home_card_right {
+    background: #00000018;
+    padding: 20px 15px;
+    margin: 0 15px;
+    color: white;
+    border: 2px solid white;
+    border-radius: 30px;
+}
+
+.home_list {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+.home_page .home_list_title h3 {
+    font-size: 22px;
+    text-align: center;
+}
+
+.home_page .home_search_box {
+    position: relative;
+}
+
+.home_search_box input {
+    height: 38px;
+    padding-left: 34px;
+    border-radius: 17px;
+    background: #ffffff6b;
+}
+
+.home_page .search_icon {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translate(0, -50%);
+}
+
+.home_page .list_item {
+    display: flex;
+    color: white;
+    justify-content: space-between;
+}
+
+.streamer_photo img {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+}
+
+.streamer_name p {
+    font-size: 20px;
+    color: rgb(173, 170, 170);
+}
+
+.enter_room_btn {
+    color: black;
+    background-color: white;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+
+
+/* Large desktops and laptops */
+@media (min-width: 1200px) {}
+
+/* Landscape tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+    .home_page .meme_challange_content {
+        top: 15px;
+    }
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+    .home_page .meme_challange_content {
+        top: 30px;
+    }
+
+    .landscape_pb_100 {
+        padding-bottom: 100px;
+    }
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) {
+    .mb_xs_4 {
+        margin-bottom: 30px;
+    }
+}

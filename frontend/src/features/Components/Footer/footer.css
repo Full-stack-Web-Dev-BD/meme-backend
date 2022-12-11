@@ -1,0 +1,73 @@
+._footer{
+    height: 60px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 999;
+    left: 0;
+    background: url("../../../assets/fondo.png");
+    background-position: bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.footer_content{
+    padding: 10px 0 ;
+}
+.menu-left ul{ 
+    list-style: none;     
+    font-size: 22px;
+    color: white;
+    display: flex;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+}
+.menu-left ul li a {
+    white-space: nowrap;
+}
+.menu-right ul li a {
+    white-space: nowrap;
+}
+.menu-right ul{
+    display: inline-block;
+    list-style: none;     
+    font-size: 22px;
+    color: white;
+    display: flex;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+}
+
+/* Large desktops and laptops */
+@media (min-width: 1200px) {
+
+}
+
+/* Landscape tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) { 
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) { 
+
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) { 
+    ._footer{
+        position: inherit;
+        height: 220px;
+    }
+    .menu-right{
+        margin-top: 20px;
+    }
+    .menu-left ul{
+        display: block
+    }
+}

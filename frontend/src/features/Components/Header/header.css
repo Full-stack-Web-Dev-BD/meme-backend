@@ -1,0 +1,31 @@
+.page_header{
+    height: 90px;
+    width: 100%;
+    position: fixed;
+    background: url("../../../assets/fondo.png");
+    z-index: 99;
+    background-position: top;
+    background-repeat: no-repeat;
+}
+.header_left_content{
+    padding: 24.5px 0 ;
+}
+.header_right_content{
+    padding: 26px 0 ;
+}
+.page_header  .sing_up_btn{
+    color: black;
+    background: white;
+    padding: 2px 15px;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 11px;
+}
+.page_header  .log_in_btn{
+    color: white;
+    background: #f9af12;
+    padding: 2px 15px;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 11px;
+}

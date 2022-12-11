@@ -1,0 +1,17 @@
+.terms_card_inner{
+    border-radius: 20px ;
+    padding: 20px 70px 35px  70px;
+    background: #12121245;
+}
+.terms_content{
+    overflow-y: scroll;
+}
+.terms_content h2{
+    color: white;
+    font-size: 1.3rem;
+}
+.terms_content p{
+    color: white;
+    font-size: 18px;
+    margin: 0;
+}

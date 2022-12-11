@@ -1,0 +1,397 @@
+.account_page .account_sidebar {}
+
+.toggle_tab {
+    display: none;
+}
+
+.active {
+    display: block !important;
+}
+
+.account_page .account_sidebar {
+    overflow: scroll;
+    width: 30%;
+    background: #0000001f;
+    border-radius: 30px;
+    padding-top: 30px;
+    padding-bottom: 150px;
+}
+
+.account_sidebar .active {
+    background-color: #00000042 !important;
+    color: white !important;
+    outline: 0;
+}
+
+.account_sidebar .nav-link {
+    outline: 0;
+    border-radius: 0 !important;
+    text-align: left;
+    border: 0;
+    font-size: 28px;
+    font-weight: 600;
+    padding-left: 40px;
+    background-color: transparent;
+    color: white;
+    width: 100%;
+}
+
+.account_sidebar_top {
+    display: flex;
+    justify-content: space-around;
+    color: white;
+}
+
+.account_sidebar_top h2 {
+    font-size: 25px;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
+.account_sidebar_tab {
+    width: 100%;
+    margin-left: 40px;
+}
+
+.account_sidebar_tab_content {
+    width: 70%;
+    background-color: #0000001f !important;
+    border-radius: 20px;
+}
+
+.account_sidebar .y_btn {
+    bottom: 20px;
+}
+
+.account_form label {
+    color: white;
+}
+
+.account_form input {
+    background: transparent;
+    border: 1px solid white;
+    padding-left: 20px;
+    border-radius: 18px;
+}
+
+.account_form input::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: white;
+    font-weight: 300;
+}
+
+.account_form input::-moz-placeholder {
+    /* Firefox 19+ */
+    color: white;
+    font-weight: 300;
+}
+
+.account_form input:-ms-input-placeholder {
+    /* IE 10+ */
+    color: white;
+    font-weight: 300;
+}
+
+.account_form input:-moz-placeholder {
+    /* Firefox 18- */
+    color: white;
+    font-weight: 300;
+}
+
+.account_select_item select {
+    background: transparent;
+    border: 1px solid white;
+    padding-left: 20px;
+    color: white;
+    border-radius: 18px;
+}
+
+/* dashboard css */
+.room_selector select {
+    outline: 0;
+    border: 0;
+    color: white;
+    background: transparent;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.player_table button {
+    color: black;
+}
+
+.player_table th {
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.player_table td {
+    padding: 5px 10px;
+    color: white;
+}
+
+.total_count {
+    margin-top: 15px;
+    width: 200px;
+    margin-left: 20px;
+    padding: 5px;
+    border-radius: 15px;
+    text-align: center;
+    color: white;
+}
+
+.total_status_holder {
+    width: 30%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.total_status_holder img {
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.total_status {
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.total_visitor {
+    background: rgba(3, 3, 122, 0.774);
+    width: 100%;
+    flex-shrink: 0;
+    height: 85px;
+}
+
+.total_games {
+    flex-shrink: 0;
+    width: 100%;
+    height: 85px;
+    background: #e30519
+}
+
+.total_games img {
+    width: 45px;
+}
+
+.followers {
+    background: #f9af12
+}
+
+.dashboard_component {
+    position: relative;
+    display: flex;
+}
+
+.dashboard_component .meme_image {
+    width: 100%;
+}
+
+.fs_24 {
+    font-size: 24px;
+}
+
+.account_sidebar_tab_content {
+    margin-bottom: 20px;
+}
+
+.account_db {}
+
+.sidebar_play_btn {
+    height: calc(100% - 40px);
+}
+
+.acc_sidebar_toggle {
+    position: fixed;
+    z-index: 99;
+    width: 80px;
+    text-align: center;
+    background: white;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    left: 0;
+}
+
+.acc_sidebar_toggle i {
+    color: #8b2d52;
+}
+
+.acc_sidebar_toggle_hide {
+    text-align: center;
+}
+
+.acc_sidebar_toggle_hide i {
+    color: white;
+    text-align: center;
+    font-size: 35px;
+
+}
+.map_box img{
+    max-width: 100%;
+}
+.map_box .total_count {
+    
+}
+.total_count_map {
+    width: 30%;
+    flex-shrink: unset;
+    height: 100px;
+}
+/* responsive */
+/* Large desktops and laptops */
+@media (min-width: 1200px) {}
+
+/* Landscape tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+    .account_sidebar_tab {
+        margin-left: 5px;
+    }
+
+    .account_sidebar_top {
+        display: inline-block;
+        width: 100%;
+        color: white;
+        text-align: center;
+    }
+
+    .account_sidebar .nav-link {
+        font-size: 18px;
+        padding-left: 20px;
+    }
+
+    .account_sidebar_top h2 {
+        font-size: 18px;
+        margin-top: 15px;
+    }
+
+    .profile_box {
+        margin-top: 10px;
+    }
+
+    .account_form label {
+        font-size: 16px;
+    }
+
+    .account_meme_img img {
+        display: flex;
+    }
+
+    .account_meme_img img {
+        margin-top: auto;
+    }
+
+    .y_btn_rs {
+        padding: 0 5px;
+        font-size: 14px;
+    }
+
+    .player_table th {
+        font-size: 14px;
+        padding: 5px;
+        text-align: center;
+    }
+}
+
+.acc_sidebar_toggle {
+    cursor: pointer;
+    color: 8b2d52;
+    font-size: 35px;
+    padding: 0 0 0 20px;
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+    .acc_sidebar_content_db{
+        width: 100%;
+    }
+    .total_status_holder img{
+        height: min-content;
+    }
+    .account_sidebar {
+        margin-top: 90px;
+        position: absolute;
+        background: #8b2d52 !important;
+        top: 0;
+        z-index: 999;
+        width: inherit !important;
+    }
+    .y_btn_rs{
+        padding: 0 5px !important;
+        font-size: 15px !important;
+    }
+    .account_sidebar_top {
+        display: inline-block;
+        text-align: center;
+    }
+
+    .account_sidebar .nav-link {
+        font-size: 18px;
+    }
+
+    .account_sidebar_tab {
+        margin-left: 5px;
+    }
+
+    .profile_box {
+        margin-top: 10px;
+    }
+
+    .account_form label,
+    .fs_24 {
+        font-size: 16px;
+    }
+
+    .account_sidebar_tab_content_acc {
+        width: 100%;
+    }
+
+    .account_meme_img {
+        display: none
+    }
+
+    .flex_content_between {
+        margin-top: 10px;
+    }
+
+    .player_table th {
+        font-size: 14px;
+        padding: 0 7px;
+    }
+    .player_table th {
+        padding: 5px ;
+    }
+    
+    .dashboard_component{
+        display: block
+    }
+    .total_status_holder{
+        width: 100%;
+    }
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) {
+    .account_db {
+        position: inherit;
+    }
+    .total_count{
+        margin-left: 0;
+    }
+    .flex_content_between{
+        display: block
+    }
+    .total_count_map{
+        width: inherit;
+    }
+    .account_form input , select {
+        width: 100%;
+    }
+}

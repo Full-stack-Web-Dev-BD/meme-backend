@@ -1,0 +1,250 @@
+.fb_btn {
+    text-transform: capitalize !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    padding: 10px !important;
+    margin-top: 20px !important;
+    border-radius: 2px !important;
+}
+
+.register_page .register_card {
+    padding: 20px;
+    background: #0000002e;
+    border-radius: 35px;
+    padding-bottom: 60px;
+}
+
+.register_card {
+    position: relative;
+}
+
+.register_card .register_or {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.register_or span {
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.register_or::before {
+    position: absolute;
+    content: "";
+    width: 2px;
+    height: 120px;
+    background-color: white;
+    z-index: 999;
+    left: 50%;
+    bottom: 50px;
+    transform: translate(-50%);
+}
+
+.register_or::after {
+    position: absolute;
+    content: "";
+    width: 2px;
+    height: 120px;
+    background-color: white;
+    z-index: 999;
+    left: 50%;
+    top: 50px;
+    transform: translate(-50%);
+}
+
+.register_page .meme_challange {
+    position: relative;
+    height: 200px;
+}
+
+.register_page .meme_challange_content {
+    position: absolute;
+    top: 0px;
+    transform: translate(-50%);
+    left: 50%;
+    z-index: 999
+}
+
+.register_social_btn {
+    width: 240px;
+    border: 1px solid white;
+    margin: 20px 0;
+    color: white;
+    border-radius: 18px;
+    padding: 5px 20px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.register_login_area {
+    padding-top: 30px;
+    width: 240px;
+}
+
+.fb_login_btn {
+    background-color: #507cbe;
+}
+
+.twitter_login_btn {
+    background-color: #67c7ed;
+}
+
+.google_login_btn {
+    background-color: #e0492f;
+}
+
+._register {
+    display: flex;
+    justify-content: space-between;
+}
+
+.register_subscribe_area {
+    width: 240px;
+}
+
+.register_subscribe_area_title {
+    height: 50px;
+}
+
+.register_subscribe_area_title h2 {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+
+.register_subscribe_input {
+    text-align: left;
+    color: white;
+    font-weight: 600;
+    width: 240px;
+    padding-left: 30px;
+    display: inline-block;
+    margin-bottom: 40px;
+}
+
+.register_subscribe_input::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: white;
+}
+
+.register_subscribe_input::-moz-placeholder {
+    /* Firefox 19+ */
+    color: white;
+}
+
+.register_subscribe_input:-ms-input-placeholder {
+    /* IE 10+ */
+    color: white;
+}
+
+.register_subscribe_input:-moz-placeholder {
+    /* Firefox 18- */
+    color: white;
+}
+
+
+
+
+/* Large desktops and laptops */
+@media (min-width: 1200px) {
+    .register_or {
+        display: block;
+    }
+
+    .register_sm_or {
+        display: none;
+    }
+}
+
+/* Landscape tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .register_or {
+        display: block;
+    }
+
+    .register_sm_or {
+        display: none;
+    }
+}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+    .register_or {
+        display: block;
+    }
+
+    .register_sm_or {
+        display: none;
+    }
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+    .register_card {
+        text-align: center;
+    }
+
+    .register_or {
+        display: none;
+    }
+
+    .register_sm_or {
+        display: block;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .register_sm_or span {
+        color: white;
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    .register_sm_or span {
+        position: relative;
+    }
+
+    .register_sm_or span::after {
+        position: absolute;
+        width: 100px;
+        height: 3px;
+        background-color: white;
+        content: '';
+        top: 50%;
+        right: 100%;
+        z-index: 9;
+    }
+
+    .register_sm_or span::before {
+        position: absolute;
+        width: 100px;
+        height: 3px;
+        background-color: white;
+        content: '';
+        top: 50%;
+        left: 100%;
+        z-index: 9;
+    }
+
+    .register_sm_or span {
+        position: relative;
+    }
+
+    ._register {
+        display: inline;
+    }
+
+    .register_login_area {
+        display: inline-block;
+    }
+
+    .register_subscribe_area {
+        display: inline-block;
+    }
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) {}

@@ -1,0 +1,185 @@
+.tc {
+    text-transform: capitalize;
+}
+
+.fs_20 {
+    font-size: 20px;
+}
+
+.pt_90 {
+    padding-top: 90px;
+}
+
+.pt_45 {
+    padding-top: 45px;
+}
+
+.c_p {
+    cursor: pointer;
+}
+
+.align_center {
+    align-items: center;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+}
+
+.header_gap {
+    margin-top: 85px;
+}
+
+.text-black {
+    color: black !important;
+}
+
+.text_black {
+    color: black !important;
+}
+
+.w-70p {
+    width: 70%
+}
+
+.gray_input input {
+    height: 38px;
+    border-radius: 17px;
+    background: #ffffff6b;
+}
+
+.input_bg {
+    background-color: #0e0e0e;
+}
+
+.yellow_btn {
+    color: white;
+    background: #f9af12;
+    padding: 2px 38px;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 11px;
+}
+
+/* profile image */
+.profile_box {
+    position: relative;
+    display: inline-block;
+    width: 85px;
+}
+
+.profile_box .profile_circle {
+    width: 85px;
+    height: 85px;
+    display: inline-block;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.profile_image {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.profile_image>img {
+    width: 85px;
+}
+
+/* hide scrollbar */
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}
+
+.flex_content_between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex_around {
+    display: flex;
+    justify-content: space-around;
+}
+
+.flex_evenly {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.winner_details {
+    color: white;
+    padding: 0 20px;
+    margin-top: 30px;
+}
+
+.winner_details h5 {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.winner_details p {
+    font-style: italic;
+}
+
+.c_pointer {
+    cursor: pointer;
+}
+
+/* profile image box */
+
+/* account nav profile box */
+.account_nav .pn_profile_box {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+}
+
+.account_nav .pn_profile_circle {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.account_nav .pn_profile_img {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.pn_profile_img img {
+    width: 50px;
+}
+
+.text_yellow {
+    color: #f9af12;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.pl_white::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: white;
+}
+
+.pl_white ::-moz-placeholder {
+    /* Firefox 19+ */
+    color: white;
+}
+
+.pl_white:-ms-input-placeholder {
+    /* IE 10+ */
+    color: white;
+}
+
+.pl_white:-moz-placeholder {
+    /* Firefox 18- */
+    color: white;
+}
