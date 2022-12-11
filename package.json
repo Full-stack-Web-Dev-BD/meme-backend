@@ -15,6 +15,7 @@
     "body-parser": "*",
     "cors": "*",
     "express": "*",
+    "concurrently": "*",
     "gravatar": "*",
     "js-yaml": "*",
     "jsonwebtoken": "*",
