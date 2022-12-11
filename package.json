@@ -22,7 +22,7 @@
     "moment": "*",
     "mongoose": "*",
     "morgan": "*",
-    "multer": "*-lts.1",
+    "multer": "*",
     "nodemon": "*",
     "passport": "*",
     "passport-jwt": "*",
