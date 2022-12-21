@@ -2,7 +2,7 @@ import React from 'react'
 import { useRecoilState } from 'recoil'
 import { appState } from '../../../states/appState'
 import "./profilebox.css"
-const ProfileBox = ({ name, smName }) => {
+const ProfileBox = ({ name, img, smName }) => {
   const [getAppState, setAppState] = useRecoilState(appState)
   return (
     <div className=''>
@@ -14,7 +14,7 @@ const ProfileBox = ({ name, smName }) => {
                 <div className='p_photo_box' >
                   <div className='p_black_circle'></div>
                   <div className='p_img'>
-                    <img src={`/assets/${getAppState.user.pp}.png`} />
+                    <img src={`/assets/${img ? img : getAppState.user?.pp}.png`} />
                   </div>
                 </div>
                 <h5 className='text_black' style={{ lineHeight: "46px", marginLeft: '15px' }}> {name ? name : 'User Name'} </h5>
@@ -27,7 +27,7 @@ const ProfileBox = ({ name, smName }) => {
                 <div className='p_photo_box' >
                   <div className='p_black_circle'></div>
                   <div className='p_img'>
-                    <img src='/assets/1.png' />
+                    <img src={`/assets/${img ? img : getAppState.user?.pp}.png`} />
                   </div>
                 </div>
                 <h2 className='text_black'> {name ? name : 'User Name'} </h2>

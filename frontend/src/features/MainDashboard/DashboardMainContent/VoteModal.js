@@ -14,7 +14,7 @@ const style = {
     p: 4,
 };
 
-export default function VoteModal({ activeMeme, doVote }) {
+export default function VoteModal({ activeMeme, setVoted, doVote }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -29,6 +29,8 @@ export default function VoteModal({ activeMeme, doVote }) {
             paidRottenEggs: paidRottenEggsCount
         }
         doVote(obj)
+        setVoted(true)
+        setOpen(false)
     }
     return (
         <div>
@@ -47,20 +49,20 @@ export default function VoteModal({ activeMeme, doVote }) {
                             <h6>Paid (Important) </h6>
                             <div className='mb-3'>
                                 <label className='m-0'>Ester Eggs</label>
-                                <input required onChange={e => setPaidEsterEggsCount(e.target.value)} value={paidEsterEggsCount} type="number" className='form-control' placeholder='Enter Amount (Min-0 ) ' />
+                                <input min={0} required onChange={e => setPaidEsterEggsCount(e.target.value)} value={paidEsterEggsCount} type="number" className='form-control' placeholder='Enter Amount (Min-0 ) ' />
                             </div>
                             <div>
                                 <label className='m-0'>Rotten  Eggs</label>
-                                <input required onChange={e => setPaidRottenEggsCount(e.target.value)} value={paidRottenEggsCount} type="number" className='form-control' placeholder='Enter Amount (Min-0) ' />
+                                <input min={0} required onChange={e => setPaidRottenEggsCount(e.target.value)} value={paidRottenEggsCount} type="number" className='form-control' placeholder='Enter Amount (Min-0) ' />
                             </div>
                             <h6 className='mt-4'>Free</h6>
                             <div className='mb-3'>
                                 <label className='m-0'>Ester Eggs</label>
-                                <input required onChange={e => setFreeEsterEggsCount(e.target.value)} value={freeEsterEggsCount} type="number" className='form-control' placeholder='Enter Amount (Min-0 ) ' />
+                                <input min={0} required onChange={e => setFreeEsterEggsCount(e.target.value)} value={freeEsterEggsCount} type="number" className='form-control' placeholder='Enter Amount (Min-0 ) ' />
                             </div>
                             <div>
                                 <label className='m-0'>Ester Eggs</label>
-                                <input required onChange={e => setFreeRottenEggsCount(e.target.value)} value={freeRottenEggsCount} type="number" className='form-control' placeholder='Enter Amount (Min-0) ' />
+                                <input min={0} required onChange={e => setFreeRottenEggsCount(e.target.value)} value={freeRottenEggsCount} type="number" className='form-control' placeholder='Enter Amount (Min-0) ' />
                             </div>
                             <button type='submit' className='btn mt-3  yellow_btn' > Vote</button>
                             <button className='btn mt-3  yellow_btn ml-3' onClick={e => handleClose()} > Close</button>

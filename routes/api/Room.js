@@ -5,7 +5,7 @@ const RoomRouter = express.Router();
 RoomRouter.get('/', async (req, res) => {
     var rooms = await Room.find()
     console.log("get room", rooms)
-    res.json(rooms)
+    res.json(rooms.reverse())
 })
 
 RoomRouter.get('/:roomName', async (req, res) => {

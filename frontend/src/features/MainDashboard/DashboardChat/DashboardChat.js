@@ -20,6 +20,15 @@ const DashboardChat = ({ state, sendSMS }) => {
   //     return window.confirm("Confirm refresh");
   //   };
   // }, [])
+  const scroll_bottom = () => {
+    var db_chat_box = document.getElementById("db_chat_box")
+    db_chat_box.scrollTo = db_chat_box.scrollHeight;
+
+  }
+  useEffect(() => {
+    scroll_bottom()
+  }, [])
+
   return (
     <div className='dashboard_chat_inner'>
       <div className='profile_bar'>
@@ -58,7 +67,7 @@ const DashboardChat = ({ state, sendSMS }) => {
                           </div>
                         </div>                    </div>
                       <a href='/account'>
-                        <button className='badge mr-3 '  >Go to Dashboard</button>
+                        <button className='badge mr-3 '  >Account</button>
                       </a>
                       <button className='badge mr-3 ' onClick={e => setAccountDialog(!accountDialog)}>Close</button>
                       <button className='badge ' onClick={e => logout()} >Logout</button>
@@ -82,26 +91,28 @@ const DashboardChat = ({ state, sendSMS }) => {
           </div>
         </div>
       </div>
-      <div className='db_chat_box'>
-        <button data-toggle="tooltip" className='btn yellow_btn text_black tc'> {state.room} </button>
-        <div className='chat_history'>
-          {
-            state.chatHistory.map((signleChat, i) => {
-              return <>
-                <div key={i} className='single_chat'  >
-                  <div className='chat_user'>
-                    <img src='/assets/1.png' />
-                    <div className='chat_msg'>
-                      <span className='c_user_name' > {signleChat.sms.user}  </span>
-                      <p> {signleChat.sms.text} </p>
+      <div className='dbc_holder '>
+        <div id='db_chat_box' className='db_chat_box hsc'>
+          <button data-toggle="tooltip" className='btn yellow_btn text_black tc'> {state.room} </button>
+          <div className='chat_history'>
+            {
+              state.chatHistory.map((signleChat, i) => {
+                return <>
+                  <div key={i} className='single_chat'  >
+                    <div className='chat_user'>
+                      <img src={`/assets/${signleChat.user?.pp ? signleChat.user?.pp : 1}.png`} />
+                      {/* {console.log(signleChat)} */}
+                      <div className='chat_msg'>
+                        <span className='c_user_name' > {signleChat.sms?.user}  </span>
+                        <p> {signleChat.sms?.text} </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </>
-            })
-          }
-        </div>
-        <div className='dc_egg_count'>
+                </>
+              })
+            }
+          </div>
+
           <div className='dc_egg'>
             <div className='dc_egg_layout' >
               <div className='ec_egg_container'>

@@ -16,7 +16,6 @@ const DashboardSidebar = ({ state }) => {
         setActivePl(playerID)
     }
     useEffect(() => {
-
         window.addEventListener("beforeunload", function (event) {
             event.returnValue = ""
         });

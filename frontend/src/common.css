@@ -92,6 +92,11 @@
 }
 
 /* hide scrollbar */
+.hsc::-webkit-scrollbar {
+    display: none;
+}
+
+/* hide scrollbar */
 .scrollbar-hidden::-webkit-scrollbar {
     display: none;
 }

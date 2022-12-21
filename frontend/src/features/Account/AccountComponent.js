@@ -10,11 +10,11 @@ const AccountComponent = ({ user }) => {
     const [city, setCity] = useState()
     const [language, setLanguage] = useState()
     useEffect(() => {
-        setCountry(user.country)
-        setName(user.name)
-        setEmail(user.email)
-        setCity(user.city)
-        setLanguage(user.language)
+        setCountry(user?.country)
+        setName(user?.name)
+        setEmail(user?.email)
+        setCity(user?.city)
+        setLanguage(user?.language)
     }, [])
     const submitHandler = (e) => {
         e.preventDefault()
@@ -61,7 +61,7 @@ const AccountComponent = ({ user }) => {
                                 <div className='flex_content_between '>
                                     <label className='fs_24' >Country</label>
                                     {
-                                        user.country ?
+                                        user?.country ?
                                             <div className='account_select_item w-70p'>
                                                 <input className='form-control ' disabled value={country} placeholder='user@gmail.com' />
                                             </div> :

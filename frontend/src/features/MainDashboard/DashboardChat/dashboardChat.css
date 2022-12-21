@@ -1,12 +1,15 @@
 .dashboard_chat_inner {}
 
-
-.db_chat_box {
+.dbc_holder {
     position: relative;
-    height: 70vh;
-    background-color: white;
     border-radius: 10px;
     margin: 40px;
+}
+
+.db_chat_box {
+    height: 70vh;
+    background-color: white;
+    overflow: scroll;
 }
 
 .dc_egg_layout {
@@ -25,7 +28,9 @@
     padding: 0 30px;
     text-align: right;
     position: absolute;
-    bottom: 50px;
+    bottom: 0;
+    padding-bottom: 50px;
+    background-color: white;
 }
 
 .dc_egg img {
@@ -212,9 +217,8 @@
 }
 
 .chat_history {
-    height: 40vh;
-    overflow-y: scroll;
     margin: 8px;
+    padding-bottom: 200px;
 }
 
 .single_chat {

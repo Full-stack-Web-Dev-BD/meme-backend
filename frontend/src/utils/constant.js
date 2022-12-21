@@ -1,13 +1,26 @@
+import axios from "axios";
 import { toast } from "react-toastify";
+import { getUserFromToken } from "../Util";
+import socketIOClient from 'socket.io-client'
 
+export const baseURL = "http://localhost:5000"
+export const socket = socketIOClient(baseURL, { transports: ['websocket', 'polling', 'flashsocket'] })
+// export const baseURL = "https://meme-backend-api.herokuapp.com"
 export function randomNum() {
     return Math.floor(1000 + Math.random() * 9000);
 }
 export function randomNum2() {
     return Math.floor(10 + Math.random() * 90);
 }
-export const baseURL = "http://localhost:5000"
-// export const baseURL = "https://meme-backend-api.herokuapp.com"
+export const fullProfile = () => {
+    axios.get(`${baseURL}/api/user/find/${getUserFromToken()._id}`)
+        .then(resp => {
+            return resp.data
+        })
+        .catch(err => {
+            return {}
+        })
+}
 export const logout = () => {
     window.localStorage.removeItem("meme_token")
     toast.success("Logout Success !!!")

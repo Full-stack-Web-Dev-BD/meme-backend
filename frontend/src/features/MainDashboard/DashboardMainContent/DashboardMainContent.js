@@ -1,8 +1,7 @@
-import getVideoId from 'get-video-id';
 import React, { useEffect, useState } from 'react'
 import "./dashboardMainContent.css"
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { baseURL, randomNum, utilActiveDB, utilSelectedInput } from '../../../utils/constant';
+import { baseURL, randomNum, socket, utilActiveDB, utilSelectedInput } from '../../../utils/constant';
 import ProfileBox from '../../Components/ProfileBox/ProfileBox';
 import Countdown, { } from 'react-countdown'
 import { toast } from 'react-toastify';
@@ -14,8 +13,13 @@ import jwtDecode, { } from 'jwt-decode'
 import { useRecoilState } from 'recoil';
 import queryString from 'query-string'
 import VoteModal from './VoteModal';
+import { getUserFromToken } from '../../../Util';
+import WaitingSlider from '../../Components/WaitingSlider';
+
+
+
 const DashboardMainContent = ({ state }) => {
-  const slideTime = 10
+  var slideTime = 10
   const [getAppState, setAppState] = useRecoilState(appState)
   const [selectHistory, setSelectHistory] = useState({
     images: [],
@@ -36,16 +40,25 @@ const DashboardMainContent = ({ state }) => {
   const [selectedInput, setSelectedInput] = useState("")
   const [selectedColor, setSelectedColor] = useState("")
   const [activeMeme, setActiveMEME] = useState({})
+  const [isVoted, setIsVoted] = useState(false)
 
   useEffect(() => {
+    socket.on("roundPushBack", data => {
+      toast.success("A new Round has been  Created ")
+      initDashboardContent()
+    })
+    initDashboardContent()
+  }, [])
+  const initDashboardContent = () => {
     var tokenuser = jwtDecode(window.localStorage.getItem("meme_token"))
+    setActiveDB(utilActiveDB.waiting)
+    setMemeUploaded('')
     setTokenUser(tokenuser)
     getActiveRound()
-    getAllRound()
     getMyRoom()
     isRoundExpired()
     getAllFiles()
-  }, [])
+  }
   const getAllFiles = () => {
     axios.get(`${baseURL}/files`)
       .then(resp => {
@@ -57,127 +70,63 @@ const DashboardMainContent = ({ state }) => {
     var params = queryString.parse(window.location.href)
     axios.get(`${baseURL}/api/room/${params.room}`)
       .then(res => {
-        if (res.data?.owner == tokenuser._id) { //owner test
-          axios.get(`${baseURL}/api/round/active-round/${tokenuser._id}`)
-            .then(resp => {
-              setActiveRound(resp.data)
-              if (resp.data.status) {
-                setActiveDB(utilActiveDB.roundStarted)
-                var diff = getDiff(resp.data)
-                setTimeout(() => {
-                  axios.get(`${baseURL}/api/round/${resp.data.round._id}`)
-                    .then(res => {
-                      var currentMEME = 0
-                      setActiveDB(utilActiveDB.voting)
-                      var memeInterval = setInterval(() => {
-                        if (res.data.perticipants[currentMEME]) {
-                          setActiveMEME(res.data.perticipants[currentMEME])
-                          setActiveDB(utilActiveDB.showMEME)
-                          currentMEME += 1;
-                        } else {
-                          console.log("cleare interval")
-                          clearInterval(memeInterval)
-                          axios.get(`${baseURL}/api/round/${resp.data.round._id}`)
-                            .then(rs => {
-                              var perticipants = rs.data.perticipants
-                              var winner = perticipants[0]
-                              for (var i = 0; i < perticipants.length; i++) {
-                                var winnerTotalEggs = winner.vote.paidEsterEggsCount + winner.vote.paidRottenEggsCount
-                                var thisTotalEggs = perticipants[i].vote.paidEsterEggsCount + perticipants[i].vote.paidRottenEggsCount
-                                if (thisTotalEggs > winnerTotalEggs) {
-                                  winner = perticipants[i]
-                                }
-                              }
-                              console.log("Winner is ", winner)
-                              axios.post(`${baseURL}/api/round/winner/${resp.data.round._id}`, { winner: winner })
-                                .then(r => {
-                                  toast.success("Winner Detected !!")
-                                  setActiveMEME(winner)
-                                  setActiveDB(utilActiveDB.winner_result)
-                                })
-                            })
-                          // Detect Winner Now 
-                        }
-                      }, slideTime * 1000);
-                    })
-                    .catch(err => { console.log(err) })
-                }, diff);
-              }
-            })
-            .catch(err => {
-              console.log(err)
-            })
-        } else {
-          axios.get(`${baseURL}/api/round/active-round/${res.data?.owner}`)
-            .then(resp => {
-              setActiveRound(resp.data)
-              if (resp.data.status) {
-                setActiveDB(utilActiveDB.roundStarted)
-                var diff = getDiff(resp.data)
-                setTimeout(() => {
-                  axios.get(`${baseURL}/api/round/${resp.data.round._id}`)
-                    .then(res => {
-                      var currentMEME = 0
-                      var memeInterval = setInterval(() => {
-                        if (res.data.perticipants[currentMEME]) {
-                          setActiveMEME(res.data.perticipants[currentMEME])
-                          setActiveDB(utilActiveDB.showMEME)
-                          currentMEME += 1;
-                        } else {
-                          clearInterval(memeInterval)
-                          axios.get(`${baseURL}/api/round/${resp.data.round._id}`)
-                            .then(rs => {
-                              var perticipants = rs.data.perticipants
-                              var winner = perticipants[0]
-                              for (var i = 0; i < perticipants.length; i++) {
-                                var winnerTotalEggs = winner.vote.paidEsterEggsCount + winner.vote.paidRottenEggsCount
-                                var thisTotalEggs = perticipants[i].vote.paidEsterEggsCount + perticipants[i].vote.paidRottenEggsCount
-                                if (thisTotalEggs > winnerTotalEggs) {
-                                  winner = perticipants[i]
-                                }
-                              }
-                              axios.post(`${baseURL}/api/round/winner/${resp.data.round._id}`, { winner: winner })
-                                .then(r => {
-                                  toast.success("Winner Detected !!")
-                                  setActiveMEME(winner)
-                                  setActiveDB(utilActiveDB.winner_result)
-                                })
-                            })
-                          // Detect Winner Now 
-                        }
-                      }, slideTime * 1000);
-                    })
-                    .catch(err => { console.log(err) })
-                }, diff);
-              }
-            })
-            .catch(err => {
-              console.log(err)
-            })
-        }
+
+        axios.get(`${baseURL}/api/round/all/${res.data?.owner}`)
+          .then(resp => {
+            setAllRound(resp.data)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        axios.get(`${baseURL}/api/round/active-round/${res.data?.owner}`)
+          .then(resp => {
+            setActiveRound(resp.data)
+            if (resp.data.status) {
+              setActiveDB(utilActiveDB.roundStarted)
+              // time to perticipate on  meme upload
+              var diff = getDiff(resp.data)
+              setTimeout(() => {//detecting time while  should show meme  after passing  perticipate  session 
+                axios.get(`${baseURL}/api/round/${resp.data.round._id}`)//fatch round again with all petricipate  while upload session end 
+                  .then(res => {
+                    var perticipants = res.data.perticipants
+                    if (perticipants.length < 1) {
+                      toast.error("No perticipants detected !")
+                      setActiveMEME({ meme: null, user: { name: "Round result" } })
+                      return setActiveDB(utilActiveDB.winner_result)
+                    }
+                    var currentMEME = 0
+                    setActiveDB(utilActiveDB.voting)
+                    var memeInterval = setInterval(() => {
+                      console.log("this are perticipant  available and  mapping to show", res.data.perticipants)
+                      if (res.data.perticipants[currentMEME]) {
+                        setIsVoted(false)
+                        setActiveMEME(res.data.perticipants[currentMEME])
+                        setActiveDB(utilActiveDB.showMEME)
+                        currentMEME += 1;
+                      } else {
+                        //map completed  and  time to find result 
+                        clearInterval(memeInterval)
+                        axios.get(`${baseURL}/api/round/winner/${resp.data.round._id}`)
+                          .then(roundResult => {
+                            toast.success("Round result released !");
+                            setActiveMEME(roundResult.data)
+                            setActiveDB(utilActiveDB.winner_result)
+                          })
+                        // Detect Winner Now 
+                      }
+                    }, slideTime * 1000);
+                  })
+                  .catch(err => { console.log(err) })
+              }, diff);
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
       })
       .catch(err => {
         console.log(err)
       })
-  }
-  const getAllRound = () => {
-    if (isRoomOwner()) {
-      axios.get(`${baseURL}/api/round/all/${getAppState.user._id}`)
-        .then(resp => {
-          setAllRound(resp.data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    } else {
-      axios.get(`${baseURL}/api/round/all/${myRoom.owner}`)
-        .then(resp => {
-          setAllRound(resp.data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
   }
   const getMyRoom = () => {
     var params = queryString.parse(window.location.href)
@@ -193,7 +142,8 @@ const DashboardMainContent = ({ state }) => {
       })
 
   }
-  const Completionist = () => <span>Time Up</span>;
+  const Completionist = () => <span>...</span>;
+  const TimeReminingCompletionist = () => <span></span>;
   // Renderer callback with condition
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
@@ -204,17 +154,15 @@ const DashboardMainContent = ({ state }) => {
       return <span>{minutes}:{seconds}</span>;
     }
   };
-  // layout Image
-  const addImage = (img) => {
-    if (activeDB == utilActiveDB.v_single) {
-      console.log(selectHistory)
-      if (selectHistory.images.length < 2) {
-        setSelectHistory({ ...selectHistory, images: [...selectHistory.images, img] })
-      } else {
-        toast.error("You can Select Up to 2 Image  For this Layout")
-      }
+  const timeReminingRenderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a completed state
+      return <TimeReminingCompletionist />;
+    } else {
+      // Render a countdown
+      return <span>{minutes}:{seconds}</span>;
     }
-  }
+  };
   const roundCreateFN = (time) => {
     var obj = {
       id: getAppState.user._id,
@@ -223,10 +171,7 @@ const DashboardMainContent = ({ state }) => {
     axios.post(`${baseURL}/api/round`, obj)
       .then(resp => {
         console.log(resp)
-        toast.success("Round created ")
-        state.socketIO.emit("roundPush", { room: myRoom.roomName, })
-        getActiveRound()
-        getAllRound()
+        socket.emit("roundPush", { room: myRoom.roomName, })
       })
       .catch(err => {
         console.log(err)
@@ -266,8 +211,9 @@ const DashboardMainContent = ({ state }) => {
       axios.post(`${baseURL}/api/round/upload`, formdata)
         .then(resp => {
           if (resp.data?.status) {
-            setMemeUploaded(resp.data.file)
+            setMemeUploaded("Your Meme Uploaded")
             toast.success(resp.data.message)
+            console.log(memeUploaded)
           } else {
             toast.error(resp.data.message)
           }
@@ -285,8 +231,9 @@ const DashboardMainContent = ({ state }) => {
       axios.post(`${baseURL}/api/round/upload`, obj)
         .then(resp => {
           if (resp.data?.status) {
-            setMemeUploaded(resp.data.file)
+            setMemeUploaded("Your Meme Uploaded")
             toast.success(resp.data.message)
+            console.log(memeUploaded)
           } else {
             toast.error(resp.data.message)
           }
@@ -300,12 +247,16 @@ const DashboardMainContent = ({ state }) => {
   const doVote = (obj) => {
     obj.userID = tokenUser._id
     obj.id = activeRound.round._id
-
     axios.post(`${baseURL}/api/round/vote`, obj)
       .then(resp => {
         console.log(resp)
         if (resp.data.status) {
-          toast.success(resp.data.message)
+          toast.success("Your Vote Submitted ")
+          // update User  and balance
+          axios.get(`${baseURL}/api/user/find/${getUserFromToken()._id}`)
+            .then(resp => {
+              setAppState({ ...getAppState, user: resp.data })
+            })
         } else {
           Object.keys(resp.data.error).map(el => {
             toast.error(resp.data.error[el])
@@ -317,6 +268,7 @@ const DashboardMainContent = ({ state }) => {
       })
   }
   const detectFileType = (str) => {
+    if (!str) return null;
     var fileName = str.split(".")
     if (fileName[1] == "png" || fileName[1] == "jpg" || fileName[1] == "jpeg") {
       return "png"
@@ -346,9 +298,7 @@ const DashboardMainContent = ({ state }) => {
           </div> :
           <div className='round_time'>
             <div className='flex_content_between'>
-              <span>
-                Round
-              </span>
+              <span>ROUND - {allRound.length + 1} </span>
               <span>
                 {
                   isRoomOwner() ?
@@ -370,6 +320,7 @@ const DashboardMainContent = ({ state }) => {
           </div>
       }
       <div className='db_playing_box_top'>
+
         <div className='db_dynamic_content'>
           {
             activeDB == utilActiveDB.image ?
@@ -409,7 +360,13 @@ const DashboardMainContent = ({ state }) => {
                       </div>
                   }
                   <div className=' text-center'>
-                    <button className='btn yellow_btn' onClick={e => memeUpload()} >Upload MEME</button>
+                    {
+                      !memeUploaded ?
+                        <button className='btn yellow_btn' onClick={e => memeUpload()} >Upload MEME</button>
+                        :
+                        <button className='btn yellow_btn' >Your meme Uploaded successfully !!</button>
+
+                    }
                   </div>
                 </div>
               </div> : ''
@@ -423,7 +380,7 @@ const DashboardMainContent = ({ state }) => {
           {
             activeDB == utilActiveDB.roundStarted ?
               <div className='db_waiting' >
-                <h2>Round Started (<Countdown date={Date.now() + getDiff(activeRound)} renderer={renderer} />) </h2>
+                <h2>Round Started (<Countdown date={Date.now() + getDiff(activeRound)} renderer={timeReminingRenderer} />) </h2>
                 <div className='text-center'>
                   <butotn className="btn text_black yellow_btn c_pointer" onClick={e => { setSelectedInput(utilSelectedInput.img) }} >Upload Your MEME ! </butotn>
                 </div>
@@ -449,12 +406,20 @@ const DashboardMainContent = ({ state }) => {
                   {
                     activeMeme.roundID ?
                       <div>
-                        <VoteModal activeMeme={activeMeme} doVote={doVote} />
+                        <VoteModal activeMeme={activeMeme} setVoted={setIsVoted} doVote={doVote} />
                       </div> : ''
+                  }
+                  {
+                    !isVoted ?
+                      <div className='vote_time_remining'>
+                        <Countdown date={Date.now() + (slideTime - 1) * 1000} renderer={renderer} />
+                      </div>
+                      : ''
                   }
                 </div>
               </div> : ''
           }
+
           {
             activeDB == utilActiveDB.topic ?
               <div className='db_waiting' >
@@ -464,8 +429,12 @@ const DashboardMainContent = ({ state }) => {
           }
           {
             activeDB == utilActiveDB.voting ?
-              <div>
+              <div className='text-center'>
                 <h5 className='text-center mt-4'> Be ready to vote your  favorite MEME , It will Start soonn !! </h5>
+                <WaitingSlider />
+                <div className='vote_time_remining'>
+                  <Countdown date={Date.now() + (slideTime - 1) * 1000} renderer={renderer} />
+                </div>
               </div> : ''
           }
           {
@@ -526,8 +495,7 @@ const DashboardMainContent = ({ state }) => {
             activeDB == utilActiveDB.winner_result ?
               <div className=' winner_r text-center'>
                 <div className='text-center'>
-                  <ProfileBox smName={true} name={`${activeMeme.user.name} (Round Winner) `} />
-                  {/* <img style={{ width: '200px' }} src={`${baseURL}/${activeMeme.meme}`} /> */}
+                  <ProfileBox smName={true} img={activeMeme?.user?.pp} name={`${activeMeme?.user?.name}  (Round Winner) `} />
                   {
                     detectFileType(activeMeme.meme) == "png" || detectFileType(activeMeme.meme) == "gif" ?
                       <img style={{ marginTop: '5px', width: '251px' }} src={`${baseURL}/${activeMeme.meme}`} /> : ''
@@ -537,9 +505,13 @@ const DashboardMainContent = ({ state }) => {
                       <video controls style={{ width: "202px", marginTop: '5px' }} src={`${baseURL}/${activeMeme.meme}`} />
                       : ''
                   }
+                  {
+                    !activeMeme.meme ?
+                      <img src='/assets/noWinner.jpg' style={{ marginTop: '5px', width: '251px', borderRadius: '10px' }} /> : ''
+                  }
                 </div>
                 <br />
-                <button onClick={e => window.location.reload()} className='btn yellow_btn mt-1'>Next Game</button>
+                <button onClick={e => initDashboardContent()} className='btn yellow_btn mt-1'>Next Game</button>
               </div> : ''
           }
         </div>
@@ -547,7 +519,7 @@ const DashboardMainContent = ({ state }) => {
 
       {/* bottom side */}
       <div className='db_playing_box_bottom'>
-        <div className='pb_icons d-flex'>
+        <div className='pb_icons d-none' style={{ display: 'none' }}>
           <div className='pb_icon_box mr-3'>
             <img src='/assets/eraser.svg' />
           </div>
@@ -555,7 +527,7 @@ const DashboardMainContent = ({ state }) => {
             <img src='/assets/text.svg' />
           </div>
         </div>
-        <div className='playing_tool_box mt-4'>
+        <div className='playing_tool_box '>
           <div className='tool_box_inner'>
             <div className='playing_tools mr-5'>
               <div className='playing_tool d-flex '>
@@ -754,7 +726,7 @@ const DashboardMainContent = ({ state }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

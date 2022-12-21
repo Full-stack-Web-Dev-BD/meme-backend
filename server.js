@@ -19,7 +19,8 @@ const Chat = require('./models/Chat');
 const ChatRouter = require('./routes/api/Chat');
 const TopicRouter = require('./routes/api/TopicRouter');
 const RoundRouter = require('./routes/api/RoundRouter');
-var fs = require("fs")
+var fs = require("fs");
+const User = require('./models/User');
 
 const app = express();
 app.use(morgan('dev'))
@@ -73,11 +74,11 @@ io.on('connect', (socket) => {
 	});
 	socket.on('sendMessage', async (data) => {
 		const user = getUser(socket.id);
-		console.log("sms recived in server", user, data)
+		const userDetails = await User.findOne({ _id: data.uid })
 		var sms = { user: user.userName, text: data.message, uid: socket.id }
-		await new Chat({ room: user.room, sms })
+		await new Chat({ room: user.room, sms, user: userDetails })
 			.save()
-		io.to(user.room).emit('message', { sms });
+		io.to(user.room).emit('message', { sms, user: userDetails ? userDetails : {} });
 	});
 	socket.on('roundPush', data => {
 		console.log(data)

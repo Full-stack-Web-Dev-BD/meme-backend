@@ -26,3 +26,12 @@
         min-height: 100vh;
     }
 }
+
+.css-eglki6-MuiLinearProgress-root {
+    height: 8px !important;
+    background-color: #f9af12 !important;
+}
+
+.css-5xe99f-MuiLinearProgress-bar1 {
+    background-color: #c9192a !important;
+}

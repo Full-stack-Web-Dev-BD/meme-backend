@@ -3,38 +3,32 @@ import DashboardChat from './DashboardChat/DashboardChat'
 import DashboardMainContent from './DashboardMainContent/DashboardMainContent'
 import DashboardSidebar from './DashboardSidebar/DashboardSidebar'
 import queryString from 'query-string';
-import socketIOClient from 'socket.io-client'
 import "./dashboard.css"
-import { baseURL } from '../../utils/constant';
+import { baseURL, socket } from '../../utils/constant';
 import axios from 'axios'
 import jwtDecode from 'jwt-decode';
-import { toast } from 'react-toastify';
-var socket
+
 export class Dashboard extends Component {
   state = {
     users: [],
     chatHistory: [],
+    oldHistory: {},
     name: '',
     error: '',
     room: '',
     userID: '',
     roomDetails: {},
     topic: '',
-    socketIO: ''
+    socketIO: '',
+    tokenUser: {}
   }
   async componentDidMount() {
-    console.log(new Date().getSeconds())
     var user = jwtDecode(window.localStorage.getItem("meme_token"))
     const { name, room, topic } = queryString.parse(window.location.search);
     if (!name || !room) return window.location.href = '/'
-    this.setState({ ...this.state, name: name, room: room, topic: topic })
-
     var dbChatHistory = await axios.get(`${baseURL}/api/chat/${room}`)
-    await this.setState({ ...this.state, chatHistory: [...dbChatHistory.data] })
 
-    socket = socketIOClient(baseURL, { transports: ['websocket', 'polling', 'flashsocket'] })
-    this.setState({ ...this.state, socketIO: socket })
-    console.log("user is ", user)
+    this.setState({ ...this.state, name: name, room: room, topic: topic, tokenUser: user, chatHistory: dbChatHistory.data })
     socket.emit('join', { name, room, topic, owner: user._id, pp: user.pp }, async (error) => {
       if (error) {
         this.setState({ ...this.state, error: error });
@@ -42,7 +36,7 @@ export class Dashboard extends Component {
     });
     socket.on("message", async (data) => {
       if (!this.state.userID) {
-        this.setState({ ...this.state, uid: data.sms.uid, chatHistory: [...this.state.chatHistory, { sms: data.sms }] })
+        this.setState({ ...this.state, uid: data.sms?.uid, chatHistory: [...this.state.chatHistory, { sms: data.sms, user: data.user }] })
         this.getRoom()
       } else {
         this.setState({ ...this.state, chatHistory: [...this.state.chatHistory, { sms: data.sms }] })
@@ -52,23 +46,18 @@ export class Dashboard extends Component {
     socket.on('roomUpdate', data => {
       this.setState({ ...this.state, roomDetails: data.room })
     })
-    socket.on("roundPushBack", data => {
-      toast.success("A new Round Created , Refrashing Page to get Update !!")
-      setTimeout(() => {
-        window.location.reload()
-      }, 1500);
-    })
   }
   getRoom = () => {
     axios.post(`${baseURL}/api/room/find`, { roomName: this.state.room })
       .then(resp => {
+        console.log("rooom details is  ", resp.data)
         this.setState({ ...this.state, roomDetails: resp.data })
       })
       .catch(err => {
       })
   }
   sendSms = (sms) => {
-    socket.emit('sendMessage', { message: sms })
+    socket.emit('sendMessage', { message: sms, uid: this.state.tokenUser._id })
   }
   render() {
     return (

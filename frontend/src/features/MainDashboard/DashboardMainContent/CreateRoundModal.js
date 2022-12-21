@@ -17,7 +17,7 @@ const style = {
 };
 
 export default function CreateRoundModal({ roundCreateFN, roundNumber }) {
-    const [time, setTime] = React.useState(1);
+    const [time, setTime] = React.useState(10);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

@@ -88,7 +88,7 @@ const Register = () => {
       })
   };
   const onFailure = (err) => {
-    toast.error("Connection Error !!")
+    console.log("Connection Error !!")
   };
 
   const { linkedInLogin } = useLinkedIn({
@@ -129,6 +129,7 @@ const Register = () => {
                       clientId={clientId}
                       buttonText="Sign Up with Google"
                       onSuccess={e => onSuccess(e)}
+                      autoLoad={false}
                       onFailure={e => onFailure(e)}
                       cookiePolicy={'single_host_origin'}
                     />

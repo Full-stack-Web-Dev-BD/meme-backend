@@ -6,14 +6,13 @@ const multer = require("multer");
 const User = require('../../models/User');
 
 RoundRouter.post('/', (req, res) => {
-    console.log(req.body)
     if (!req.body.id || !req.body.time) return res.json({ message: "Time & Owner ID required !!" })
     Round.find({
         owner: req.body.id
     })
         .then(round => {
             if (round.length < 1) { // it means he can create new    bcos no active  round 
-                var expTime = moment(new Date()).add(req.body.time, "minute").toDate()
+                var expTime = moment(new Date()).add(req.body.time, "seconds").toDate()
                 new Round({ owner: req.body.id, time: req.body.time, expTime: expTime })
                     .save()
                     .then(created => {
@@ -25,7 +24,7 @@ RoundRouter.post('/', (req, res) => {
                 var date = moment(lastRound.expTime)
                 var now = moment();
                 if (now > date) { //checking  if  any  active  round
-                    var expTime = moment(new Date()).add(req.body.time, "minute").toDate()
+                    var expTime = moment(new Date()).add(req.body.time, "seconds").toDate()
                     new Round({ owner: req.body.id, time: req.body.time, expTime: expTime, winner: {} })
                         .save()
                         .then(created => {
@@ -139,8 +138,6 @@ RoundRouter.post("/upload", upload.single('file'), (req, res) => {
     if (!req.body.roundID) {
         return res.json({ message: "Round ID Required", status: false })
     }
-    console.log(req.body)
-    console.log(req.file)
     const { userID, roundID } = req.body
     if (!userID || !roundID) return res.json({ message: "User ID and Round ID is required !!" })
     Round.findOne({ _id: req.body.roundID })
@@ -225,14 +222,34 @@ RoundRouter.post('/vote', (req, res) => {
             }
         })
 })
-RoundRouter.post("/winner/:id", (req, res) => {
+RoundRouter.get("/winner/:id", (req, res) => {
     Round.findById({ _id: req.params.id })
         .then(round => {
-            round.winner = req.body.winner
-            round.save()
-                .then(updated => {
-                    res.json(updated)
-                })
+            if (Object.keys(round.winner).length > 0) {
+                console.log("pre detected winner is ", round.winner)
+                return res.json(round.winner)
+            } else {
+                var perticipants = round.perticipants
+                if (perticipants.length > 0) {
+                    var winner = perticipants[0]
+                    for (var i = 1; i < perticipants.length; i++) {
+                        var winnerTotalEggs = winner.vote.paidEsterEggsCount - winner.vote.paidRottenEggsCount
+                        var thisTotalEggs = perticipants[i].vote.paidEsterEggsCount - perticipants[i].vote.paidRottenEggsCount
+                        if (thisTotalEggs > winnerTotalEggs) {
+                            winner = perticipants[i]
+                        }
+                    }
+                    console.log("deteceted winner is ", winner)
+                    round.winner = winner
+                    round.save()
+                        .then(updated => {
+                            return res.json(winner)
+                        })
+                } else {
+                    var noWinner = { meme: null, user: { name: "Round result released !" } }
+                    res.json(noWinner)
+                }
+            }
         })
         .catch(err => res.json(err))
 

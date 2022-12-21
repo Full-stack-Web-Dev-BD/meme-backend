@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const chatSchema = new Schema({
+	user: {
+		type: Object,
+		require: true
+	},
 	room: {
 		type: String,
 		require: true

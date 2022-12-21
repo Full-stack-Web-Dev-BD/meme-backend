@@ -86,22 +86,22 @@ export default function InviteModal() {
                         <div className='mt-4 ' style={{
                             textAlign: 'center',
                         }}>
-                            <a href='https://facebook.com'>
+                            <a target="_blank" onClick={e => copy()} href='https://facebook.com'>
                                 <span>
                                     <FacebookOutlinedIcon style={{ color: '#4064ac', fontSize: '32px' }} />
                                 </span>
                             </a>
-                            <a href='https://facebook.com'>
+                            <a target="_blank" onClick={e => copy()} href='https://facebook.com'>
                                 <span>
                                     <TwitterOutlinedIcon style={{ color: '#4064ac', fontSize: '32px' }} />
                                 </span>
                             </a>
-                            <a href='https://facebook.com'>
+                            <a target="_blank" onClick={e => copy()} href='https://facebook.com'>
                                 <span>
                                     <Linkedin style={{ color: '#4064ac', fontSize: '32px' }} />
                                 </span>
                             </a>
-                            <a href='https://facebook.com'>
+                            <a target="_blank" onClick={e => copy()} href='https://facebook.com'>
                                 <span>
                                     <Telegram style={{ color: '#4064ac', fontSize: '32px' }} />
                                 </span>

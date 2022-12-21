@@ -8,12 +8,15 @@ const DashboardComponent = () => {
     const [getAppState, setAppState] = useRecoilState(appState)
     const [totalGame, setTotalGame] = useState(0)
     const [round, setRound] = useState([])
+    const [latestWinner, setLatestWinner] = useState({})
     useEffect(() => {
-
         axios.get(`${baseURL}/api/round/totalround`)
             .then(res => {
                 setTotalGame(res.data?.total)
             })
+        if (getAppState.rooms.length > 0) {
+            fetchRound(0)
+        }
     }, [])
 
     const fetchRound = (roomID) => {
@@ -22,8 +25,8 @@ const DashboardComponent = () => {
         axios.get(`${baseURL}/api/round/all/${owner}`)
             .then(resp => {
                 setRound(resp.data)
+                setLatestWinner(resp.data[0])
             })
-
     }
     return (
         <div>
@@ -31,35 +34,39 @@ const DashboardComponent = () => {
                 <div className='account_sidebar_tab_content acc_sidebar_content_db'>
                     <div className='p-4'>
                         <div className='room_selector'>
-                            <select onChange={e => fetchRound(e.target.value)} >
-                                <option style={{ color: 'gray' }} value="">Name of the room</option>
+                            <select style={{ textTransform: 'capitalize' }} onChange={e => fetchRound(e.target.value)} >
+                                <option style={{ textTransform: 'capitalize', color: 'gray' }} value="">Select Room</option>
                                 {
                                     getAppState.rooms.map((room, i) => {
                                         return (
-                                            <option key={i} style={{ color: 'gray' }} value={i} >{room.roomName}  </option>
+                                            <option key={i} style={{ textTransform: 'capitalize', color: 'gray' }} value={i} >{room.roomName}  </option>
                                         )
                                     })
                                 }
                             </select>
                         </div>
-                        <div className='winner_details'>
-                            <div className='flex_content_between'>
-                                <h5> Winner </h5>
-                                <h5> Country Played </h5>
-                            </div>
-                            <div className='flex_content_between'>
-                                <p>Name of the winner</p>
-                                <p>United State of America</p>
-                            </div>
-                            <div className='flex_content_between'>
-                                <h5> Number of Followers </h5>
-                                <p> City Played </p>
-                            </div>
-                            <div className='flex_content_between'>
-                                <p>4320495024</p>
-                                <p>New York</p>
-                            </div>
-                        </div>
+                        {
+                            round.length > 0 ?
+                                <div className='winner_details'>
+                                    <div className='flex_content_between'>
+                                        <h5> Latest Winner </h5>
+                                        <h5> Country Played </h5>
+                                    </div>
+                                    <div className='flex_content_between'>
+                                        <p> {latestWinner.winner?.user.name} </p>
+                                        <p> {latestWinner.winner?.user.country} </p>
+                                    </div>
+                                    <div className='flex_content_between'>
+                                        <h5> Number of Followers </h5>
+                                        <h5> City Played </h5>
+                                    </div>
+                                    <div className='flex_content_between'>
+                                        <p> {latestWinner.winner?.user.followers ? latestWinner.winner?.user.followers : 0} </p>
+                                        <p> {latestWinner.winner?.user.city ? latestWinner.winner?.user.city : "Not recognized!"} </p>
+                                    </div>
+                                </div> :
+                                <p style={{ color: 'white' }}>This Room does't have any history ! </p>
+                        }
                         <div className='player_table'>
                             <div style={{ height: "300px", overflowY: 'scroll' }} className="hide_sc">
                                 <table className="table table-bordered">
@@ -68,10 +75,10 @@ const DashboardComponent = () => {
                                             <th>
                                                 <button className='btn yellow_btn y_btn_rs '>Players</button>
                                             </th>
-                                            <th>
+                                            <th className='text-center'>
                                                 <img style={{ width: '30px' }} src='/assets/RottenEgg.png' />
                                             </th>
-                                            <th>
+                                            <th className='text-center'>
                                                 <img style={{ width: '30px' }} src='/assets/EasterEgg.png' />
                                             </th>
                                             {/* <th>Votes Recived</th> */}
@@ -81,9 +88,9 @@ const DashboardComponent = () => {
                                         {
                                             round.map((el, i) => (
                                                 <tr key={i} >
-                                                    <td className=''> {el.winner?.user.name} </td>
-                                                    <td className='text-center'> {el.winner?.vote.paidEsterEggsCount} </td>
-                                                    <td className='text-center'> {el.winner?.vote.paidRottenEggsCount} </td>
+                                                    <td className=''> {el.winner?.user.name ? el.winner?.user.name : "No Perticipants"} </td>
+                                                    <td className='text-center'> {el.winner?.vote.paidEsterEggsCount ? el.winner?.vote.paidEsterEggsCount : 0} </td>
+                                                    <td className='text-center'> {el.winner?.vote.paidRottenEggsCount ? el.winner?.vote.paidRottenEggsCount : 0} </td>
                                                     {/* <td className='text-center'> {el.vote} </td> */}
                                                 </tr>
                                             ))

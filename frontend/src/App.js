@@ -5,7 +5,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import Home from './features/Home/Home';
 import Register from './features/Register/Register';
 import "./app.css"
@@ -32,11 +32,19 @@ function App() {
     if (getUserFromToken()) {
       axios.get(`${baseURL}/api/user/find/${getUserFromToken()._id}`)
         .then(resp => {
-          setAppState({ ...getAppState, user: { name: "hello" } })
-          axios.get(`${baseURL}/api/room`)
-            .then(resp2 => {
-              setAppState({ ...getAppState, rooms: resp2.data, user: resp.data, loaded: true })
-            })
+          if (resp.data) {
+            setAppState({ ...getAppState, user: { name: "hello" } })
+            axios.get(`${baseURL}/api/room`)
+              .then(resp2 => {
+                setAppState({ ...getAppState, rooms: resp2.data, user: resp.data, loaded: true })
+              })
+          } else {
+            window.localStorage.removeItem("meme_token")
+            toast.error("Your Token Not  Valid ! Please login again ! ")
+            setTimeout(() => {
+              window.location.href = '/'
+            }, 2000);
+          }
         })
     } else {
       setAppState({ ...getAppState, loaded: true })
