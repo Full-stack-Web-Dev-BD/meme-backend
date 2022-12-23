@@ -96,7 +96,8 @@ io.on('connect', (socket) => {
 });
 
 app.use(express.static("uploads"));
+var host = '89.116.225.104'
+server.listen(port,host, () => {
+	    console.log(`Server is running on http://${host}:${port}`);
 
-server.listen(port, () => {
-	console.log('server is running on port: ' + port);
 })
