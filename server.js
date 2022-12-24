@@ -99,7 +99,7 @@ io.on('connect', (socket) => {
 });
 
 app.use(express.static("uploads"));
-app.listen(port, () => {
+server.listen(port, () => {
 	    console.log(`Server is running on http://${host}:${port}`);
 
 })
