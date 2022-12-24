@@ -7,6 +7,7 @@ const passport = require('passport');
 const UserRoutes = require('./routes/api/users')
 const morgan = require('morgan')
 const cors = require('cors')
+var host = '89.116.225.104'
 const {
 	addUser,
 	removeUser,
@@ -60,7 +61,9 @@ app.get("/files", (req, res) => {
 		return res.json(files)
 	})
 })
-
+app.get("/", (req, res) => { 
+	res.send(`Server is up and running on http://${host}:${port}`)
+})
 
 // Sockets
 io.on('connect', (socket) => {
@@ -96,8 +99,7 @@ io.on('connect', (socket) => {
 });
 
 app.use(express.static("uploads"));
-var host = '89.116.225.104'
-server.listen(port,host, () => {
+server.listen(port, () => {
 	    console.log(`Server is running on http://${host}:${port}`);
 
 })
