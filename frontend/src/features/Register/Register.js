@@ -88,6 +88,7 @@ const Register = () => {
       })
   };
   const onFailure = (err) => {
+    console.log(err)
     console.log("Connection Error !!")
   };
 
