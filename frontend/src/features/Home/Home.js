@@ -78,16 +78,17 @@ const Home = () => {
                     </div>
                     <form onSubmit={e => submitHandler(e)} className='home_card_form'>
                       <div className='mt-2'>
-                        <label htmlFor='room_code' >Topic</label>
-                        <br />
-                        <div className='home_input_copy_group'>
-                          <input required name='topic' onChange={e => setTopic(e.target.value)} style={{ paddingRight: '40px' }} value={topic} className='form-control pl_white' id='room_code' placeholder='Topic' />
-                        </div>
-                      </div> <div className='mt-2'>
                         <label htmlFor='room_code' >Room Code or Name</label>
                         <br />
                         <div className='home_input_copy_group'>
                           <input required name='room' onChange={e => setRoom(e.target.value)} style={{ paddingRight: '40px' }} value={room} className='form-control pl_white' id='room_code' placeholder='Room Name' />
+                        </div>
+                      </div>
+                      <div className='mt-2'>
+                        <label htmlFor='room_code' >Topic</label>
+                        <br />
+                        <div className='home_input_copy_group'>
+                          <input required name='topic' onChange={e => setTopic(e.target.value)} style={{ paddingRight: '40px' }} value={topic} className='form-control pl_white' id='room_code' placeholder='Topic' />
                         </div>
                       </div>
                       <div className='mt-4 text-center'>
@@ -117,10 +118,10 @@ const Home = () => {
                         availableRoom.map((el, i) => (
                           <div key={i} className='list_item'>
                             <div className='streamer_photo'>
-                              <img src='/assets/1.png' />
+                              <img src='/assets/gamechaticon.png' />
                             </div>
                             <div className='streamer_name'>
-                              <p> {el.roomName} </p>
+                              <p style={{ textTransform: 'capitalize' }}> {el.roomName} </p>
                             </div>
                             <div className='enter_room'>
                               <button className='btn enter_room_btn' onClick={e => enterRoom(el)} >ENTER ROOM</button>

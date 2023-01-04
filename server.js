@@ -66,11 +66,7 @@ app.get("/files", (req, res) => {
 	fs.readdir("./uploads", (err, files) => {
 		return res.json(files)
 	})
-})
-app.get("/", (req, res) => { 
-	res.send(`Server is up and running on http://${host}:${port}`)
-})
-
+}) 
 // Sockets
 io.on('connect', (socket) => {
 	socket.on('join', ({ name, room, topic, owner, pp }, callback) => {
@@ -106,6 +102,6 @@ io.on('connect', (socket) => {
 
 app.use(express.static("uploads"));
 server.listen(port, () => {
-	    console.log(`Server is running on http://${host}:${port}`);
+	    console.log(`Server is running on http://localhost:${port}`);
 
 })
