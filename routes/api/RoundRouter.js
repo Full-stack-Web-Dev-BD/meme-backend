@@ -43,11 +43,13 @@ RoundRouter.post('/', (req, res) => {
 })
 
 
-RoundRouter.get('/active-round/:id', (req, res) => {
+RoundRouter.post('/active-round', (req, res) => {
     Round.find({
-        owner: req.params.id
+        owner: req.body.ownerID,
+        room:  req.body.roomName
     })
         .then(round => {
+            console.log("round is ", round)
             if (round.length < 1) {
                 return res.json({ message: " No Active Round Existing for You", status: false })
             } else {

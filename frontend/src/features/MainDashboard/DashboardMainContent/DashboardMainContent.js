@@ -19,7 +19,7 @@ import WaitingSlider from '../../Components/WaitingSlider';
 
 
 const DashboardMainContent = ({ state }) => {
-  var slideTime = 10
+  var slideTime = 30
   const [getAppState, setAppState] = useRecoilState(appState)
   const [selectHistory, setSelectHistory] = useState({
     images: [],
@@ -70,7 +70,6 @@ const DashboardMainContent = ({ state }) => {
     var params = queryString.parse(window.location.href)
     axios.get(`${baseURL}/api/room/${params.room}`)
       .then(res => {
-
         axios.get(`${baseURL}/api/round/all/${res.data?.owner}`)
           .then(resp => {
             setAllRound(resp.data)
@@ -78,7 +77,7 @@ const DashboardMainContent = ({ state }) => {
           .catch(err => {
             console.log(err)
           })
-        axios.get(`${baseURL}/api/round/active-round/${res.data?.owner}`)
+        axios.get(`${baseURL}/api/round/active-round`,{ownerID:res.data?.owner, roomName:state.room})
           .then(resp => {
             setActiveRound(resp.data)
             if (resp.data.status) {

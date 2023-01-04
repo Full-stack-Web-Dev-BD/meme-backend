@@ -40,7 +40,7 @@ export default function CreateRoundModal({ roundCreateFN, roundNumber }) {
                         <h5 className='text-center'>Create a New Round</h5>
                         <form>
                             <div>
-                                <label>Round Time</label>
+                                <label>Round Time ( Minutes ) </label>
                                 <input className='form-control' value={time} onChange={e => setTime(e.target.value)} required type="number" placeholder='Enter  Session Time (Minutes) ' />
                             </div>
                             <div className='mt-4 text-right'>

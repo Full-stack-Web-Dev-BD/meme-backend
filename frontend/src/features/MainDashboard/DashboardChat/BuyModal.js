@@ -51,7 +51,7 @@ export default function BuyModal() {
     }
     return (
         <div>
-            <button onClick={handleOpen} className='btn  btn-block ' >Cheer to Win ! </button>
+            <button onClick={handleOpen} className='btn  btn-block ' >Buy More Eggs</button>
             <Modal
                 open={open}
                 onClose={handleClose}
