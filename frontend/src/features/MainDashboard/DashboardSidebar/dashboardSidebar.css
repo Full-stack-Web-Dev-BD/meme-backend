@@ -40,6 +40,7 @@
 }
 
 .player_name {
+  text-transform: capitalize;
   font-weight: 500;
   font-size: 20px;
   align-items: center;

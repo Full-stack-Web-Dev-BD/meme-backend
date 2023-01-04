@@ -12,7 +12,7 @@ RoundRouter.post('/', (req, res) => {
     })
         .then(round => {
             if (round.length < 1) { // it means he can create new    bcos no active  round 
-                var expTime = moment(new Date()).add(req.body.time, "seconds").toDate()
+                var expTime = moment(new Date()).add(req.body.time, "minutes").toDate()
                 new Round({ owner: req.body.id, time: req.body.time, expTime: expTime })
                     .save()
                     .then(created => {
@@ -24,7 +24,7 @@ RoundRouter.post('/', (req, res) => {
                 var date = moment(lastRound.expTime)
                 var now = moment();
                 if (now > date) { //checking  if  any  active  round
-                    var expTime = moment(new Date()).add(req.body.time, "seconds").toDate()
+                    var expTime = moment(new Date()).add(req.body.time, "minutes").toDate()
                     new Round({ owner: req.body.id, time: req.body.time, expTime: expTime, winner: {} })
                         .save()
                         .then(created => {
