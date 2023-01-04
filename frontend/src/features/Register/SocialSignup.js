@@ -27,7 +27,22 @@ export default function SocialSignup({ isSocialSignupModalOpen, user }) {
             .then(res => {
                 toast.success("Registration Success ")
                 setTimeout(() => {
-                    window.location.href = '/'
+                    axios.post(`${baseURL}/api/user/login`, {
+                        email:user.email, password
+                    })
+                        .then(res => {
+                            setTimeout(() => {
+                                window.location.href = "/home"
+                            }, 2000);
+                            window.localStorage.setItem("meme_token", res.data.token)
+                            toast.success("Login Success , Redirecting to Account !")
+                        })
+                        .catch(err => {
+                            console.log(err)
+                            Object.keys(err.response.data).map(e => {
+                                toast.error(err.response.data[e])
+                            })
+                        })
                 }, 2000);
             })
             .catch(err => {

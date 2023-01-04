@@ -13,7 +13,6 @@ import SocialSignup from './SocialSignup';
 
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
 // You can use provided image shipped by this package or using your own
-import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
 
 const Register = () => {
   const clientId = '777503944063-5mssnj41ranrib5alak109bhr2h3csl7.apps.googleusercontent.com'
@@ -56,16 +55,17 @@ const Register = () => {
     var socialuser = sres.profileObj
     axios.get(`${baseURL}/api/user/find-email/${socialuser.email}`)
       .then(res => {
+        console.log(res.data)
         if (res.data == null) {
+          socialuser.country = country
+          setUser(socialuser)
+          setSocialModal(true)
+        } else {
           toast.warning("Your Account Already Exist  , Please Login ")
           toast.info("Redirecting on Login Page ")
           setTimeout(() => {
             window.location.href = "/"
           }, 2500);
-        } else {
-          socialuser.country = country
-          setUser(socialuser)
-          setSocialModal(true)
         }
       })
   };
@@ -92,18 +92,6 @@ const Register = () => {
     console.log("Connection Error !!")
   };
 
-  const { linkedInLogin } = useLinkedIn({
-    clientId: '86vhj2q7ukf83q',
-    redirectUri: `${window.location.origin}/register`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
-    onSuccess: (code) => {
-      console.log(code)
-      axios.get(`https://api.linkedin.com/v2/me/${code}`)
-        .then(resp => console.log(resp))
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
   return (
     <div className='register_page'>
       <Header content="none" />
