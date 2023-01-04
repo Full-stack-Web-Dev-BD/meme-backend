@@ -25,7 +25,7 @@ export default function SocialSignup({ isSocialSignupModalOpen, user }) {
         console.log(regUser)
         axios.post(`${baseURL}/api/user/register`, regUser)
             .then(res => {
-                toast.success("Registration Success ")
+                toast.success("Registration Success, Please wait  Loggin in...  ")
                 setTimeout(() => {
                     axios.post(`${baseURL}/api/user/login`, {
                         email:user.email, password

@@ -70,7 +70,7 @@ const Register = () => {
       })
   };
   const onFBSuccess = (fres) => {
-    // return console.log(fres)
+    return console.log(fres)
     var socialuser = fres
     axios.get(`${baseURL}/api/user/find-email/${socialuser.email}`)
       .then(res => {
