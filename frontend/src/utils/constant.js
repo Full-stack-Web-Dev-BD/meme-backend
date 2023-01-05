@@ -4,7 +4,7 @@ import { getUserFromToken } from "../Util";
 import socketIOClient from 'socket.io-client'
 
 // export const baseURL = "http://localhost:4000"
-export const baseURL = "https://89.116.225.104:4000"
+export const baseURL = "http://89.116.225.104:4000"
 
 export const socket = socketIOClient(baseURL, { transports: ['websocket', 'polling', 'flashsocket'] })
 // export const baseURL = "https://meme-backend-api.herokuapp.com"
