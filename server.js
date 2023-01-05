@@ -6,8 +6,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const UserRoutes = require('./routes/api/users')
 const morgan = require('morgan')
-const cors = require('cors')
-var host = '89.116.225.104'
+const cors = require('cors') 
 const {
 	addUser,
 	removeUser,
