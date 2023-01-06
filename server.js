@@ -97,7 +97,9 @@ io.on('connect', (socket) => {
 });
 
 app.use(express.static("uploads"));
-
+app.get('/', (req, res) => {
+	res.send("<h3 style=' text-align: center;font-weight: 700;font-family: cursive;color: #ff62ad;margin-top: 300px;text-transform: capitalize;font-size:36px'> Welcome to MemeChallange-Backend  </h3> ")
+})
 server.listen(port, () => {
 	    console.log(`Server is running on http://localhost:${port}`);
 
