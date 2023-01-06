@@ -1,2 +1,0 @@
-websocket.js:50 WebSocket connection to 'wss://memechallengeme.online/socket.io/?EIO=4&transport=websocket' failed:  
-WebSocketClient.js:16 WebSocket connection to 'wss://memechallenge.me:3000/ws' failed:  
