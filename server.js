@@ -21,6 +21,7 @@ const TopicRouter = require('./routes/api/TopicRouter');
 const RoundRouter = require('./routes/api/RoundRouter');
 var fs = require("fs");
 const User = require('./models/User');
+const path = require('path');
 
 const app = express();
 app.use((req,res,next)=>{
@@ -50,10 +51,6 @@ mongoose
 	.connect(db, { useUnifiedTopology: true, useNewUrlParser: true })
 	.then(() => console.log('MongoDB connected'))
 	.catch((err) => console.log(err));
-
-app.get('/', (req, res) => {
-	res.send("<h3 style=' text-align: center;font-weight: 700;font-family: cursive;color: #ff62ad;margin-top: 300px;text-transform: capitalize;font-size:36px'> Welcome to MemeChallange-Backend  </h3> ")
-})
 //use routes
 app.use('/api/user', UserRoutes);
 app.use('/api/room', RoomRouter);
@@ -100,6 +97,7 @@ io.on('connect', (socket) => {
 });
 
 app.use(express.static("uploads"));
+
 server.listen(port, () => {
 	    console.log(`Server is running on http://localhost:${port}`);
 

@@ -29,5 +29,6 @@
     "paypal-rest-sdk": "*",
     "socket.io": "*",
     "validator": "*"
-  }
+  },
+  "homepage": "."
 }
