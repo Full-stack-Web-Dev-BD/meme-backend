@@ -122,7 +122,16 @@ const Register = () => {
                       onFailure={e => onFailure(e)}
                       cookiePolicy={'single_host_origin'}
                     />
-                    <FacebookLogin
+
+<FacebookLogin
+    appId="486721986534201"
+    autoLoad={false}
+    fields="name,email,picture"
+    callback={e=>console.log("facebook response",e)}
+    cssClass="my-facebook-button-class"
+    icon="fa-facebook"
+  />
+                    {/* <FacebookLogin
                       appId="486721986534201"
                       autoLoad={false}
                       fields="name,email,picture"
@@ -131,7 +140,8 @@ const Register = () => {
                       icon={<FacebookOutlinedIcon style={{ color: 'white', fontSize: '22px' }} />}
                       textButton="Signup With Facebook"
                       size="small btn fb_btn"
-                    />
+                    /> */}
+
 
                     {/* <img
                       onClick={linkedInLogin}
