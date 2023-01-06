@@ -6,7 +6,10 @@ import socketIOClient from 'socket.io-client'
 // export const baseURL = "http://localhost:4000"
 export const baseURL = "memechallengeme.online"
 
-export const socket = socketIOClient(baseURL, {    withCredentials: true})
+export const socket = socketIOClient(baseURL, {
+     transports: ['websocket', 'polling', 'flashsocket'] ,
+     withCredentials: true
+    })
 // export const baseURL = "https://meme-backend-api.herokuapp.com"
 export function randomNum() {
     return Math.floor(1000 + Math.random() * 9000);
