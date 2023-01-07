@@ -66,6 +66,7 @@ app.get("/files", (req, res) => {
 // Sockets
 io.on('connect', (socket) => {
 	socket.on('join', ({ name, room, topic, owner, pp }, callback) => {
+		console.log("user connected ")
 		const { error, user } = addUser({ id: socket.id, name, room, socket, topic, owner: owner, pp: pp });
 		if (error) return callback(error);
 		socket.join(user.room);

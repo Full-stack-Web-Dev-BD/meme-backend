@@ -70,6 +70,7 @@ const DashboardMainContent = ({ state }) => {
     var params = queryString.parse(window.location.href)
     axios.get(`${baseURL}/api/room/${params.room}`)
       .then(res => {
+        console.log('resdata', res.data)
         axios.get(`${baseURL}/api/round/all/${res.data?.owner}`)
           .then(resp => {
             setAllRound(resp.data)
@@ -77,7 +78,7 @@ const DashboardMainContent = ({ state }) => {
           .catch(err => {
             console.log(err)
           })
-        axios.get(`${baseURL}/api/round/active-round`, { ownerID: res.data?.owner, roomName: state.room })
+        axios.post(`${baseURL}/api/round/active-round`, { ownerID: res.data?.owner, roomName: res.data?.roomName })
           .then(resp => {
             if (resp.data) {
               setActiveRound(resp.data)
@@ -167,7 +168,8 @@ const DashboardMainContent = ({ state }) => {
   const roundCreateFN = (time) => {
     var obj = {
       id: getAppState.user._id,
-      time: time
+      time: time, 
+      room:state.room
     }
     axios.post(`${baseURL}/api/round`, obj)
       .then(resp => {
@@ -303,7 +305,7 @@ const DashboardMainContent = ({ state }) => {
               <span>
                 {
                   isRoomOwner() ?
-                    <CreateRoundModal roundCreateFN={roundCreateFN} roundNumber={allRound.length + 1} />
+                    <CreateRoundModal roundCreateFN={roundCreateFN}  roundNumber={allRound.length + 1} />
                     :
                     <div>
                       {

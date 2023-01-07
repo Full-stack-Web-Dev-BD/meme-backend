@@ -6,20 +6,26 @@ const multer = require("multer");
 const User = require('../../models/User');
 
 RoundRouter.post('/', (req, res) => {
-    if (!req.body.id || !req.body.time) return res.json({ message: "Time & Owner ID required !!" })
+    if (!req.body.id || !req.body.time || !req.body.room) return res.json({ message: "Time & Owner ID required !!" })
     Round.find({
+        room: req.body.room,
         owner: req.body.id
     })
         .then(round => {
             if (round.length < 1) { // it means he can create new    bcos no active  round 
+                console.log('creating room with ', req.body)
                 var expTime = moment(new Date()).add(req.body.time, "minutes").toDate()
-                new Round({ owner: req.body.id, time: req.body.time, expTime: expTime })
+                new Round({
+                    owner: req.body.id,
+                    time: req.body.time,
+                    expTime: expTime,
+                    room: req.body.room
+                })
                     .save()
                     .then(created => {
                         return res.json(created)
                     })
             } else {
-
                 var lastRound = round[round.length - 1]
                 var date = moment(lastRound.expTime)
                 var now = moment();
@@ -44,12 +50,9 @@ RoundRouter.post('/', (req, res) => {
 
 
 RoundRouter.post('/active-round', (req, res) => {
-    Round.find({
-        owner: req.body.ownerID,
-        room:  req.body.roomName
-    })
+    Round.find({room:req.body.room})
         .then(round => {
-            console.log("round is ", round)
+            console.log("hello", round)
             if (round.length < 1) {
                 return res.json({ message: " No Active Round Existing for You", status: false })
             } else {

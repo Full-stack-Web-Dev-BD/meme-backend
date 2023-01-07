@@ -20,7 +20,7 @@ const addUser = ({ id, name, room, socket, topic, owner, pp }) => {
             if (room) {
                 var updateRoomPerticipant = [...room.perticipant]
                 if (updateRoomPerticipant.findIndex((obj) => obj.userName == user.userName) !== -1) {
-                    console.log("User Existing ")
+                    // console.log("User Existing ")
                 } else {
                     updateRoomPerticipant.push(user)
                 }
