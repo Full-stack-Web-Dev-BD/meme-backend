@@ -77,10 +77,12 @@ const DashboardMainContent = ({ state }) => {
           .catch(err => {
             console.log(err)
           })
-        axios.get(`${baseURL}/api/round/active-round`,{ownerID:res.data?.owner, roomName:state.room})
+        axios.get(`${baseURL}/api/round/active-round`, { ownerID: res.data?.owner, roomName: state.room })
           .then(resp => {
-            setActiveRound(resp.data)
-            if (resp.data.status) {
+            if (resp.data) {
+              setActiveRound(resp.data)
+            }
+            if (resp.data?.status) {
               setActiveDB(utilActiveDB.roundStarted)
               // time to perticipate on  meme upload
               var diff = getDiff(resp.data)
@@ -188,7 +190,7 @@ const DashboardMainContent = ({ state }) => {
     return myRoom.owner == tokenUser._id
   }
   const isRoundExpired = () => {
-    if (!activeRound.status) {
+    if (!activeRound?.status) {
       return false
     }
     if (0 < getDiff(activeRound)) {
@@ -198,7 +200,7 @@ const DashboardMainContent = ({ state }) => {
     }
   }
   const memeUpload = () => {
-    if (!activeRound.status) return toast.error("No active Round")
+    if (!activeRound?.status) return toast.error("No active Round")
     if (!isRoundExpired()) return toast.error("Round  Expired ")
     if (file.size) {
       var formdata = new FormData()
@@ -249,7 +251,7 @@ const DashboardMainContent = ({ state }) => {
     axios.post(`${baseURL}/api/round/vote`, obj)
       .then(resp => {
         console.log(resp)
-        if (resp.data.status) {
+        if (resp.data?.status) {
           toast.success("Your Vote Submitted ")
           // update User  and balance
           axios.get(`${baseURL}/api/user/find/${getUserFromToken()._id}`)
@@ -283,7 +285,7 @@ const DashboardMainContent = ({ state }) => {
   return (
     <div className='dashboard_main_content_inner' >
       {
-        activeRound.status ?
+        activeRound?.status ?
           <div className='round_time'>
             <div className='flex_content_between'>
               <span>ROUND - {allRound.length} </span>
@@ -305,7 +307,7 @@ const DashboardMainContent = ({ state }) => {
                     :
                     <div>
                       {
-                        activeRound.status ?
+                        activeRound?.status ?
                           <Countdown date={Date.now() + getDiff(activeRound)} renderer={renderer} /> :
                           <span> Waiting  for New Round </span>
                       }
