@@ -123,14 +123,14 @@ const Register = () => {
                       cookiePolicy={'single_host_origin'}
                     />
 
-<FacebookLogin
+{/* <FacebookLogin
     appId="486721986534201"
     autoLoad={false}
     fields="name,email,picture"
     callback={e=>console.log("facebook response",e)}
     cssClass="my-facebook-button-class"
     icon="fa-facebook"
-  />
+  /> */}
                     {/* <FacebookLogin
                       appId="486721986534201"
                       autoLoad={false}
