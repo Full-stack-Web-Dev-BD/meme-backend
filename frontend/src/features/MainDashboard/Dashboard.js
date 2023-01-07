@@ -50,7 +50,6 @@ export class Dashboard extends Component {
   getRoom = () => {
     axios.post(`${baseURL}/api/room/find`, { roomName: this.state.room })
       .then(resp => {
-        console.log("rooom details is  ", resp.data)
         this.setState({ ...this.state, roomDetails: resp.data })
       })
       .catch(err => {

@@ -69,8 +69,7 @@ const DashboardMainContent = ({ state }) => {
     var tokenuser = jwtDecode(window.localStorage.getItem("meme_token"))
     var params = queryString.parse(window.location.href)
     axios.get(`${baseURL}/api/room/${params.room}`)
-      .then(res => {
-        console.log('resdata', res.data)
+      .then(res => { 
         axios.get(`${baseURL}/api/round/all/${res.data?.owner}`)
           .then(resp => {
             setAllRound(resp.data)
@@ -78,7 +77,7 @@ const DashboardMainContent = ({ state }) => {
           .catch(err => {
             console.log(err)
           })
-        axios.post(`${baseURL}/api/round/active-round`, { ownerID: res.data?.owner, roomName: res.data?.roomName })
+        axios.post(`${baseURL}/api/round/active-round`, { room: res.data?.roomName })
           .then(resp => {
             if (resp.data) {
               setActiveRound(resp.data)
@@ -172,12 +171,20 @@ const DashboardMainContent = ({ state }) => {
       room:state.room
     }
     axios.post(`${baseURL}/api/round`, obj)
-      .then(resp => {
-        console.log(resp)
+      .then(resp => { 
+        if(resp.data?.status){
         socket.emit("roundPush", { room: myRoom.roomName, })
+        }else{
+          toast.error(resp.data.message)
+        }
       })
       .catch(err => {
         console.log(err)
+        if(err.response){
+          Object.keys(err.response.data).map(e => {
+            toast.error(err.response.data[e])
+        })
+        }
       })
   }
   const getDiff = (acRound) => {

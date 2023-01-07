@@ -6,13 +6,12 @@ const multer = require("multer");
 const User = require('../../models/User');
 
 RoundRouter.post('/', (req, res) => {
-    if (!req.body.id || !req.body.time || !req.body.room) return res.json({ message: "Time & Owner ID required !!" })
+    if (!req.body.id || !req.body.time || !req.body.room) return res.json({ message: "Time, Room Name  & Owner ID required !!" })
     Round.find({
-        room: req.body.room,
-        owner: req.body.id
+        room: req.body.room
     })
         .then(round => {
-            if (round.length < 1) { // it means he can create new    bcos no active  round 
+            if (round.length < 1) { // it means he can create new  round , bcos  there is not round existing 
                 console.log('creating room with ', req.body)
                 var expTime = moment(new Date()).add(req.body.time, "minutes").toDate()
                 new Round({
@@ -29,17 +28,24 @@ RoundRouter.post('/', (req, res) => {
                 var lastRound = round[round.length - 1]
                 var date = moment(lastRound.expTime)
                 var now = moment();
-                if (now > date) { //checking  if  any  active  round
+                if (now > date) { //if not have   any  active  round-creating  a new round
                     var expTime = moment(new Date()).add(req.body.time, "minutes").toDate()
-                    new Round({ owner: req.body.id, time: req.body.time, expTime: expTime, winner: {} })
+                    new Round({ 
+                         owner: req.body.id,
+                         time: req.body.time,
+                         expTime: expTime,
+                         room:req.body.room,
+                         winner: {} 
+                        })
                         .save()
                         .then(created => {
-                            console.log(created)
+                            console.log('Created a new round ',created)
                             return res.json(created)
                         })
                 } else {
                     // date is future
-                    return res.json({ message: "Round Existing" })
+                    console.log("Active round existing  ")
+                    return res.json({ message: "Round Existing" , status:false}).status(400)
                 }
             }
         })
@@ -52,7 +58,6 @@ RoundRouter.post('/', (req, res) => {
 RoundRouter.post('/active-round', (req, res) => {
     Round.find({room:req.body.room})
         .then(round => {
-            console.log("hello", round)
             if (round.length < 1) {
                 return res.json({ message: " No Active Round Existing for You", status: false })
             } else {
