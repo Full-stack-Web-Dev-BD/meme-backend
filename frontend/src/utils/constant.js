@@ -7,10 +7,7 @@ import socketIOClient from 'socket.io-client'
 export const baseURL= "https://89.116.225.104:9001"
 
 
-export const socket = socketIOClient(baseURL, {
-     transports: ['websocket', 'polling', 'flashsocket'] ,
-     withCredentials: true
-    }) 
+export const socket = socketIOClient(baseURL) 
 export function randomNum() {
     return Math.floor(1000 + Math.random() * 9000);
 }
