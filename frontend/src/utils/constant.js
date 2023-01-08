@@ -4,7 +4,7 @@ import { getUserFromToken } from "../Util";
 import socketIOClient from 'socket.io-client'
 
 // export const baseURL = "http://localhost:5001" // memechallenge.me  is working with this  url  
-export const baseURL= "https://89.116.225.104:5001"
+export const baseURL= "http://89.116.225.104:5001"
 
 
 export const socket = socketIOClient(baseURL, {
