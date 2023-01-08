@@ -101,7 +101,7 @@ app.use(express.static("uploads"));
 // app.get('/', (req, res) => {
 // 	res.send("<h3 style=' text-align: center;font-weight: 700;font-family: cursive;color: #ff62ad;margin-top: 300px;text-transform: capitalize;font-size:36px'> Welcome to MemeChallange-Backend  </h3> ")
 // })
-app.use(express.static('frontend/builded'))
+app.use(express.static('frontend/build'))
 app.get('*',(req, res)=>{
 	res.sendFile(path.resolve(__dirname,'frontend', 'build', 'index.html'))
 })
