@@ -70,7 +70,7 @@ const DashboardMainContent = ({ state }) => {
     var tokenuser = jwtDecode(window.localStorage.getItem("meme_token"))
     var params = queryString.parse(window.location.href)
     axios.get(`${baseURL}/api/room/${params.room}`)
-      .then(res => { 
+      .then(res => {
         axios.get(`${baseURL}/api/round/all/${res.data?.owner}`)
           .then(resp => {
             setAllRound(resp.data)
@@ -168,25 +168,25 @@ const DashboardMainContent = ({ state }) => {
   const roundCreateFN = (time) => {
     var obj = {
       id: getAppState.user._id,
-      time: time, 
-      room:state.room
+      time: time,
+      room: state.room
     }
     console.log("called round create fn ")
     axios.post(`${baseURL}/api/round`, obj)
-      .then(resp => { 
-        if(resp.data?.status){
+      .then(resp => {
+        if (resp.data?.status) {
           console.log("a new round created and roundpush  by socket ")
-        socket.emit("roundPush", { room: myRoom.roomName, })
-        }else{ 
+          socket.emit("roundPush", { room: myRoom.roomName, })
+        } else {
           toast.error(resp.data.message)
         }
       })
       .catch(err => {
         console.log(err)
-        if(err.response){
+        if (err.response) {
           Object.keys(err.response.data).map(e => {
             toast.error(err.response.data[e])
-        })
+          })
         }
       })
   }
@@ -315,7 +315,7 @@ const DashboardMainContent = ({ state }) => {
               <span>
                 {
                   isRoomOwner() ?
-                    <CreateRoundModal roundCreateFN={roundCreateFN}  roundNumber={allRound.length + 1} />
+                    <CreateRoundModal roundCreateFN={roundCreateFN} roundNumber={allRound.length + 1} />
                     :
                     <div>
                       {
@@ -520,7 +520,11 @@ const DashboardMainContent = ({ state }) => {
                   }
                   {
                     !activeMeme.meme ?
-                      <img src='/assets/noWinner.jpg' style={{ marginTop: '5px', width: '251px', borderRadius: '10px' }} /> : ''
+                      <div>
+                        <img src='/assets/noWinner.jpg' style={{ marginTop: '5px', width: '251px', borderRadius: '10px' }} />
+                        <h4>No winner deteceted !!</h4>
+                      </div>
+                      : ''
                   }
                 </div>
                 <br />
