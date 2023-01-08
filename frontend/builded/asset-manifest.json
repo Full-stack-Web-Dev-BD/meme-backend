@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9f25a707.css",
+    "main.js": "/static/js/main.5531142a.js",
+    "static/js/496.841b7968.chunk.js": "/static/js/496.841b7968.chunk.js",
+    "static/media/fondo.png": "/static/media/fondo.b90e3423e683048d9601.png",
+    "static/media/memechallengeGray.png": "/static/media/memechallengeGray.c007a1b9fec57b37be97.png",
+    "index.html": "/index.html",
+    "main.9f25a707.css.map": "/static/css/main.9f25a707.css.map",
+    "main.5531142a.js.map": "/static/js/main.5531142a.js.map",
+    "496.841b7968.chunk.js.map": "/static/js/496.841b7968.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9f25a707.css",
+    "static/js/main.5531142a.js"
+  ]
+}
