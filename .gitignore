@@ -9,10 +9,7 @@ node_modules/
 # frontend
 # testing
 /coverage
-
-# production
-/build
-*/build
+ 
 
 # misc
 .idea

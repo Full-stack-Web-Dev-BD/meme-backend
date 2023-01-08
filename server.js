@@ -35,7 +35,7 @@ app.use(cors())
 
 const server = http.createServer(app);
 const io = socketio(server);
-const port = 4000;
+const port =process.env.PORT || 9001;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
