@@ -3,13 +3,13 @@ import { toast } from "react-toastify";
 import { getUserFromToken } from "../Util";
 import socketIOClient from 'socket.io-client'
 
-// export const baseURL = "http://localhost:5001" // memechallenge.me  is working with this  url  
-// export const baseURL= "http://89.116.225.104:5001"
+// export const baseURL = "http://localhost:3000" // memechallenge.me  is working with this  url  
+// export const baseURL= "http://89.116.225.104:3000"
 export const baseURL= "https://memechallenge.me"
 
 
 
-export const socket = socketIOClient("https://89.116.225.104:5001", {
+export const socket = socketIOClient("https://89.116.225.104:3000", {
      transports: ['websocket', 'polling', 'flashsocket'] ,
      withCredentials: true
     }) 
