@@ -35,7 +35,6 @@ app.use(cors())
 
 const server = http.createServer(app);
 const io = socketio(server);
-io.set('origins', '*:*');
 const port =process.env.PORT || 5001;
 
 app.use(bodyParser.urlencoded({ extended: false }));
