@@ -21,8 +21,8 @@ RoundRouter.post('/', (req, res) => {
                     room: req.body.room
                 })
                     .save()
-                    .then(created => {
-                        return res.json(created)
+                    .then(created => { 
+                        return res.json({status:true , round :created})
                     })
             } else {
                 var lastRound = round[round.length - 1]
@@ -38,9 +38,8 @@ RoundRouter.post('/', (req, res) => {
                          winner: {} 
                         })
                         .save()
-                        .then(created => {
-                            console.log('Created a new round ',created)
-                            return res.json(created)
+                        .then(created => {  
+                            return res.json({status:true,round: created})
                         })
                 } else {
                     // date is future

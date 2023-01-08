@@ -45,6 +45,7 @@ const DashboardMainContent = ({ state }) => {
   useEffect(() => {
     socket.on("roundPushBack", data => {
       toast.success("A new Round has been  Created ")
+      console.log("initializing db again ")
       initDashboardContent()
     })
     initDashboardContent()
@@ -170,11 +171,13 @@ const DashboardMainContent = ({ state }) => {
       time: time, 
       room:state.room
     }
+    console.log("called round create fn ")
     axios.post(`${baseURL}/api/round`, obj)
       .then(resp => { 
         if(resp.data?.status){
+          console.log("a new round created and roundpush  by socket ")
         socket.emit("roundPush", { room: myRoom.roomName, })
-        }else{
+        }else{ 
           toast.error(resp.data.message)
         }
       })
