@@ -9,7 +9,7 @@ export const baseURL= "https://memechallenge.me"
 
 
 
-export const socket = socketIOClient("http://89.116.225.104:5001", {
+export const socket = socketIOClient("https://89.116.225.104:5001", {
      transports: ['websocket', 'polling', 'flashsocket'] ,
      withCredentials: true
     }) 
