@@ -17,6 +17,7 @@
     "get-video-id": "*",
     "jwt-decode": "*",
     "moment": "*",
+    "pusher-js": "^8.0.0",
     "query-string": "*",
     "react": "*",
     "react-confirm-alert": "*",

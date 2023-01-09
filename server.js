@@ -24,6 +24,12 @@ const User = require('./models/User');
 const path = require('path');
 
 const app = express();
+
+const Pusher = require("pusher");
+
+
+
+
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
@@ -35,7 +41,7 @@ app.use(cors())
 
 const server = http.createServer(app);
 const io = socketio(server);
-const port =process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -97,13 +103,33 @@ io.on('connect', (socket) => {
 	})
 });
 
+
+const pusher = new Pusher({
+	appId: "1535411",
+	key: "6f320e55606c338bdbf7",
+	secret: "043b6f419d25fffafb4a",
+	cluster: "ap2",
+	useTLS: true
+});
+
+// votes is channel , up  is  event
+app.get('/socket/pusher', (req, res) => {
+	pusher.trigger("votes", "up", {
+		message: "hello world"
+	});
+})
+
+
+
+
+
 app.use(express.static("uploads"));
 // app.get('/', (req, res) => {
 // 	res.send("<h3 style=' text-align: center;font-weight: 700;font-family: cursive;color: #ff62ad;margin-top: 300px;text-transform: capitalize;font-size:36px'> Welcome to MemeChallange-Backend  </h3> ")
 // })
 app.use(express.static('frontend/build'))
-app.get('*',(req, res)=>{
-	res.sendFile(path.resolve(__dirname,'frontend', 'build', 'index.html'))
+app.get('*', (req, res) => {
+	res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
 })
 server.listen(port, () => {
 	console.log(`Server is running on http://localhost:${port}`);

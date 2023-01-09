@@ -20,6 +20,7 @@ import { appState } from './states/appState';
 import axios from 'axios';
 import { baseURL } from './utils/constant';
 import Success from './features/PaymentSuccess/Success';
+import Pusher from 'pusher-js';
 
 import { gapi } from 'gapi-script';
 function App() {
@@ -60,6 +61,16 @@ function App() {
     };
     gapi.load('client:auth2', initClient);
   });
+  
+  const pusher = new Pusher("6f320e55606c338bdbf7", {
+    cluster: 'ap2'
+  });
+  const channel = pusher.subscribe('votes');
+  useEffect(() => {
+    channel.bind('up', function (data) {
+      console.log(data)
+    });
+  }, [])
   return (
     <div className="App">
       <BrowserRouter>

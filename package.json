@@ -13,9 +13,9 @@
   "dependencies": {
     "bcryptjs": "*",
     "body-parser": "*",
+    "concurrently": "*",
     "cors": "*",
     "express": "*",
-    "concurrently": "*",
     "gravatar": "*",
     "js-yaml": "*",
     "jsonwebtoken": "*",
@@ -27,6 +27,7 @@
     "passport": "*",
     "passport-jwt": "*",
     "paypal-rest-sdk": "*",
+    "pusher": "^5.1.2",
     "socket.io": "*",
     "validator": "*"
   },
